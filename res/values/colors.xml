@@ -1,0 +1,12 @@
+<resources>
+    <color name="dashboard_btn_text_color">#ff29549f</color>
+    <color name="actionbar_start">#E3E3E3</color>
+	<color name="actionbar_end">#F0F0F0</color>
+    <color name="action_bar_title">#000000</color>
+    <color name="tab_text">#FFFFFF</color>
+    <color name="tab_bar_background">#4C4C4C</color>
+    <color name="horizontal_line">#DEDEDE</color>
+    <color name="edit_note_line">#FAFAFA</color>
+    <color name="login_header_start">#4A4A4A</color>
+	<color name="login_header_end">#707070</color>
+</resources>

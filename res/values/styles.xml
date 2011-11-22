@@ -1,0 +1,33 @@
+<resources>
+    <style name="DashboardButton">
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:drawablePadding">2dp</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/dashboard_btn_text_color</item>
+        <item name="android:background">@null</item>
+    </style>
+
+    <style name="action_bar_title" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/action_bar_title</item>
+    </style>
+
+    <style name="action_bar_tab_bar" parent="Widget.Sherlock.ActionBar.TabBar">
+        <item name="android:background">@color/tab_bar_background</item>
+    </style>
+
+    <style name="action_bar_tab_view" parent="Widget.Sherlock.ActionBar.TabView">
+        <item name="android:background">@drawable/abs__tab_indicator_holo</item>
+        <item name="android:paddingLeft">6dp</item>
+        <item name="android:paddingRight">6dp</item>
+    </style>
+
+    <style name="action_bar_tab_text" parent="Widget.Sherlock.ActionBar.TabText">
+        <item name="android:textAppearance">@android:style/TextAppearance.Medium</item>
+        <item name="android:textColor">@color/tab_text</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+</resources>

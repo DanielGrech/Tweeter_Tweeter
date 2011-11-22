@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.DGSD.TweeterTweeter">
+
+    <uses-sdk
+            android:minSdkVersion="8"
+            android:targetSdkVersion="13" />
+
+    <application android:icon="@drawable/icon"
+                 android:label="@string/app_name"
+                 android:name=".TTApplication"
+                 android:theme="@style/Theme.TweeterTweeter">
+
+        <activity android:name=".Activity.StartupChoiceActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Choice Activities -->
+        <activity android:name=".Activity.LoginChoiceActivity" />
+
+        <!-- Phone Activities -->
+        <activity android:name=".Activity.Phone.LoginActivity" />
+
+        <!-- Libraries -->
+
+    </application>
+
+    <!-- Permissions needed -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
+    <uses-permission android:name="android.permission.INTERNET" />
+</manifest>
