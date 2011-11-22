@@ -1,6 +1,7 @@
 package com.DGSD.TweeterTweeter.Activity.Phone;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ActionBar;
 import android.support.v4.app.FragmentActivity;
@@ -15,6 +16,7 @@ import android.support.v4.view.Window;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.DGSD.TweeterTweeter.Activity.MainChoiceActivity;
 import com.DGSD.TweeterTweeter.Fragment.LoginFragment;
 import com.DGSD.TweeterTweeter.R;
 import com.DGSD.TweeterTweeter.TTApplication;
@@ -100,6 +102,9 @@ public class LoginActivity extends FragmentActivity implements TwDialogListener 
         menu.add(0, MenuRes.SETTINGS, 0, "Settings")
                 .setIcon(R.drawable.ic_menu_settings);
 
+        menu.add(0, MenuRes.ABOUT, 0, "About")
+                .setIcon(R.drawable.ic_menu_help);
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -117,10 +122,17 @@ public class LoginActivity extends FragmentActivity implements TwDialogListener 
     @Override
     public void onComplete(String value) {
         Toast.makeText(this, "Login Successful", Toast.LENGTH_LONG).show();
+
+        Intent intent = new Intent(this, MainChoiceActivity.class);
+
+        startActivity(intent);
+        finish();
     }
 
     @Override
     public void onError(String value) {
+        Log.e(TAG, "Error logging in: " + value);
+
         Toast.makeText(this, "Error logging in. Please try again", Toast.LENGTH_LONG).show();
     }
 
@@ -130,5 +142,7 @@ public class LoginActivity extends FragmentActivity implements TwDialogListener 
         public static final int SEARCH = 1;
 
         public static final int SETTINGS = 2;
+
+        public static final int ABOUT = 3;
     }
 }

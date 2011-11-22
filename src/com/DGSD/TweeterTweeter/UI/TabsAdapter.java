@@ -81,4 +81,8 @@ public class TabsAdapter extends FragmentPagerAdapter implements ViewPager.OnPag
     @Override
     public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
     }
+
+    public Fragment getCurrentItem() {
+        return mFragments.get( mViewPager.getCurrentItem() );
+    }
 }

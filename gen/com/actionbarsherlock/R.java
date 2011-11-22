@@ -305,21 +305,23 @@ containing a value of this type.
         public static final int action_bar_background=0x7f020028;
         public static final int background_repeat=0x7f020029;
         public static final int background_tile=0x7f02002a;
-        public static final int ic_menu_camera=0x7f02002b;
-        public static final int ic_menu_edit=0x7f02002c;
-        public static final int ic_menu_help=0x7f02002d;
-        public static final int ic_menu_map=0x7f02002e;
-        public static final int ic_menu_microphone=0x7f02002f;
-        public static final int ic_menu_mylocation=0x7f020030;
-        public static final int ic_menu_refresh=0x7f020031;
-        public static final int ic_menu_save=0x7f020032;
-        public static final int ic_menu_search=0x7f020033;
-        public static final int ic_menu_settings=0x7f020034;
-        public static final int ic_menu_share=0x7f020035;
-        public static final int ic_menu_trash=0x7f020036;
-        public static final int icon=0x7f020037;
-        public static final int login_header_background=0x7f020038;
-        public static final int twitter_icon=0x7f020039;
+        public static final int ic_contact_picture=0x7f02002b;
+        public static final int ic_menu_camera=0x7f02002c;
+        public static final int ic_menu_compose=0x7f02002d;
+        public static final int ic_menu_edit=0x7f02002e;
+        public static final int ic_menu_help=0x7f02002f;
+        public static final int ic_menu_map=0x7f020030;
+        public static final int ic_menu_microphone=0x7f020031;
+        public static final int ic_menu_mylocation=0x7f020032;
+        public static final int ic_menu_refresh=0x7f020033;
+        public static final int ic_menu_save=0x7f020034;
+        public static final int ic_menu_search=0x7f020035;
+        public static final int ic_menu_settings=0x7f020036;
+        public static final int ic_menu_share=0x7f020037;
+        public static final int ic_menu_trash=0x7f020038;
+        public static final int icon=0x7f020039;
+        public static final int login_header_background=0x7f02003a;
+        public static final int twitter_icon=0x7f02003b;
     }
     public static final class id {
         public static final int abs__action_bar=0x7f04001b;
@@ -342,16 +344,23 @@ containing a value of this type.
         public static final int abs__tab_custom=0x7f040017;
         public static final int abs__tab_icon=0x7f040015;
         public static final int abs__up=0x7f04000f;
+        public static final int date=0x7f040025;
         public static final int homeAsUp=0x7f040006;
+        public static final int image=0x7f040024;
+        public static final int list=0x7f04001e;
+        public static final int listItem=0x7f040022;
         public static final int listMode=0x7f040002;
-        public static final int login_layout_header=0x7f04001d;
+        public static final int login_layout_header=0x7f04001f;
+        public static final int name=0x7f040023;
         public static final int normal=0x7f040001;
+        public static final int pager=0x7f04001d;
         public static final int showCustom=0x7f040008;
         public static final int showHome=0x7f040005;
         public static final int showTitle=0x7f040007;
         public static final int tabMode=0x7f040003;
-        public static final int trends_header=0x7f04001e;
-        public static final int trends_list=0x7f04001f;
+        public static final int trends_header=0x7f040020;
+        public static final int trends_list=0x7f040021;
+        public static final int tweet=0x7f040026;
         public static final int useLogo=0x7f040004;
         public static final int wrap_content=0x7f040000;
     }
@@ -372,13 +381,18 @@ containing a value of this type.
         public static final int abs__screen_simple=0x7f03000a;
         public static final int abs__simple_spinner_item=0x7f03000b;
         public static final int activity_empty=0x7f03000c;
-        public static final int fragment_login=0x7f03000d;
+        public static final int activity_main=0x7f03000d;
+        public static final int fragment_list=0x7f03000e;
+        public static final int fragment_login=0x7f03000f;
+        public static final int list_item_timeline=0x7f030010;
     }
     public static final class string {
         public static final int abs__tab_under_ab_tag=0x7f070000;
         public static final int app_name=0x7f070001;
         public static final int consumer_key=0x7f070002;
         public static final int consumer_secret=0x7f070003;
+        public static final int receive_data_description=0x7f070005;
+        public static final int receive_twitter_data=0x7f070004;
     }
     public static final class style {
         public static final int DashboardButton=0x7f08001e;

@@ -1,0 +1,12 @@
+<resources>
+
+   <style name="action_bar_tab_bar" parent="Widget.Sherlock.ActionBar.TabBar">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="action_bar_tab_text" parent="Widget.Sherlock.ActionBar.TabText">
+        <item name="android:textAppearance">@android:style/TextAppearance.Small</item>
+        <item name="android:textColor">@color/tab_text</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+</resources>

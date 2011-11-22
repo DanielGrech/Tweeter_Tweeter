@@ -18,18 +18,51 @@
             </intent-filter>
         </activity>
 
+        <!-- Content Providers -->
+        <provider android:authorities="com.DGSD.TweeterTweeter.Data.HomeTimelineProvider"
+            android:multiprocess="true"
+            android:name="com.DGSD.TweeterTweeter.Data.HomeTimelineProvider" />
+
         <!-- Choice Activities -->
         <activity android:name=".Activity.LoginChoiceActivity" />
+        <activity android:name=".Activity.DashboardChoiceActivity" />
+        <activity android:name=".Activity.MainChoiceActivity" />
 
         <!-- Phone Activities -->
         <activity android:name=".Activity.Phone.LoginActivity" />
+        <activity android:name=".Activity.Phone.MainActivity" />
+        <activity android:name=".Activity.Phone.DashboardActivity" />
+
+        <!-- Services -->
+        <service android:name=".Service.DownloadService" />
+
+        <!-- Receivers -->
+        <receiver android:name=".Receiver.BootReceiver">
+			 <intent-filter>
+			    <action android:name="android.intent.action.BOOT_COMPLETED" />
+			 </intent-filter>
+		</receiver>
+
+        <receiver android:name=".Receiver.NetworkReceiver">
+			 <intent-filter>
+			    <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+			 </intent-filter>
+		</receiver>
 
         <!-- Libraries -->
 
     </application>
 
     <!-- Permissions needed -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
+    <permission android:name="com.DGSD.TweeterTweeter.RECEIVE_DATA"
+		android:label="@string/receive_twitter_data"
+		android:description="@string/receive_data_description"
+		android:protectionLevel="normal" />
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.DGSD.TweeterTweeter.RECEIVE_DATA" />
 </manifest>

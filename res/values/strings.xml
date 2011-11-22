@@ -2,4 +2,6 @@
     <string name="app_name">TweeterTweeter</string>
     <string name="consumer_key">AMJAX1bGldW9sUpXnjDdvw</string>
 	<string name="consumer_secret">HJiwIdO43SfOhxH1aZIfknNmhcN581kgScAhoN2Wbo</string>
+    <string name="receive_twitter_data">Receive Twitter Data</string>
+	<string name="receive_data_description">Allow this app to fetch data from twitter</string>
 </resources>

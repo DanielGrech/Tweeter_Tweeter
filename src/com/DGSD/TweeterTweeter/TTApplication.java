@@ -1,10 +1,15 @@
 package com.DGSD.TweeterTweeter;
 
+import android.app.AlarmManager;
 import android.app.Application;
 import android.os.StrictMode;
 import android.support.v4.app.FragmentActivity;
+import android.util.Config;
 import android.util.Log;
 import com.DGSD.TweeterTweeter.TwitterUtils.TwitterSession;
+import twitter4j.Twitter;
+import twitter4j.conf.Configuration;
+import twitter4j.conf.ConfigurationBuilder;
 
 /**
  * Author: Daniel Grech
@@ -17,6 +22,12 @@ public class TTApplication extends Application {
     public static String CONSUMER_KEY;
 
     public static String CONSUMER_SECRET;
+
+    public static Configuration TWITTER_CONFIG;
+
+    public static int ELEMENTS_PER_PAGE = 100;
+
+    public static int UPDATE_INTERVAL_NEVER = -1;
 
     //Placeholder for our session information
     private TwitterSession mSession;
@@ -41,12 +52,21 @@ public class TTApplication extends Application {
 
         CONSUMER_KEY = getResources().getString(R.string.consumer_key);
 
-		CONSUMER_SECRET = getResources().getString(R.string.consumer_secret);
+        CONSUMER_SECRET = getResources().getString(R.string.consumer_secret);
+
+        TWITTER_CONFIG = new ConfigurationBuilder().setOAuthConsumerKey(CONSUMER_KEY)
+                .setOAuthConsumerSecret(CONSUMER_SECRET)
+                .setIncludeEntitiesEnabled(true)
+                .build();
 
         mSession = new TwitterSession(this);
     }
 
     public TwitterSession getSession() {
         return mSession;
+    }
+
+    public long getUpdateInterval() {
+        return AlarmManager.INTERVAL_HOUR;
     }
 }

@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Droid-fu">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libs/droid-fu.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -41,11 +41,11 @@ public class TwitterSession {
 	}
 
 	public String getUsername() {
-		return sharedPref.getString(TWEET_USER_NAME, "");
+		return sharedPref.getString(TWEET_USER_NAME, null);
 	}
 	
 	public String getUserImage() {
-		return sharedPref.getString(TWEET_IMAGE, "");
+		return sharedPref.getString(TWEET_IMAGE, null);
 	}
 
 	public AccessToken getAccessToken() {

@@ -27,7 +27,7 @@ import java.util.ArrayList;
  *
  * TODO: Need to handle item clicks..
  */
-public class LoginFragment extends DialogFragment {
+public class LoginFragment extends BaseFragment {
     private static final String TAG = LoginFragment.class.getSimpleName();
 
     private ListView mListView;
