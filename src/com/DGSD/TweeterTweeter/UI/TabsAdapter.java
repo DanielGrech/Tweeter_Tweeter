@@ -3,6 +3,7 @@ package com.DGSD.TweeterTweeter.UI;
 import android.content.Context;
 import android.support.v4.app.*;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -43,6 +44,7 @@ public class TabsAdapter extends FragmentPagerAdapter implements ViewPager.OnPag
 
     @Override
     public int getCount() {
+
         return mFragments.size();
     }
 
@@ -58,6 +60,13 @@ public class TabsAdapter extends FragmentPagerAdapter implements ViewPager.OnPag
     @Override
     public void onPageSelected(int position) {
         mActionBar.setSelectedNavigationItem(position);
+
+        //Hack to force ICS devices to resume fragments when scrolling
+     /*   Fragment f = mFragments.get(position);
+        if(!f.isResumed()) {
+            f.onResume();
+        } */
+
         if(onChangeListener != null) {
             onChangeListener.onPageSelected(position);
         }

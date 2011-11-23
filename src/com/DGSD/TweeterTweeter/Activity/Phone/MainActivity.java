@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.*;
+import android.util.Log;
 import android.widget.ProgressBar;
 import com.DGSD.TweeterTweeter.Fragment.BaseFragment;
 import com.DGSD.TweeterTweeter.Fragment.DashboardFragment;
@@ -41,9 +42,11 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
 
     private static final String TIMELINE_FRAGMENT = "_timeline";
 
-    private static final String MENTIONS_FRAGMENT = "_timeline";
+    private static final String MENTIONS_FRAGMENT = "_mentions";
 
-    private static final String DM_FRAGMENT = "_timeline";
+    private static final String DM_FRAGMENT = "_dm";
+
+    private static final String REFRESHING = "_refreshing";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,14 +63,17 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
         }
 
         if(mTimelineFragment == null) {
+            Log.v(TAG, "Getting new timeline fragment");
             mTimelineFragment = HomeTimelineFragment.newInstance();
         }
 
         if(mMentionsFragment == null) {
+            Log.v(TAG, "Getting new mentions fragment");
             mMentionsFragment = DashboardFragment.newInstance();
         }
 
         if(mDmFragment == null) {
+            Log.v(TAG, "Getting new dm fragment");
             mDmFragment = DashboardFragment.newInstance();
         }
 
@@ -76,37 +82,39 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
         mActionBar = getSupportActionBar();
         mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-        ActionBar.Tab timelineTab = mActionBar.newTab().setText("Timeline");
-        ActionBar.Tab mentionsTab = mActionBar.newTab().setText("Mentions");
-        ActionBar.Tab dmTab = mActionBar.newTab().setText("DM");
-
         mTabsAdapter = new TabsAdapter(this, mActionBar, mPager);
         mTabsAdapter.setOnPageChangeListener(this);
 
-        mTabsAdapter.addTab(timelineTab, mTimelineFragment);
-        mTabsAdapter.addTab(mentionsTab, mMentionsFragment);
-        mTabsAdapter.addTab(dmTab, mDmFragment);
+        mTabsAdapter.addTab(mActionBar.newTab().setText("Timeline"), mTimelineFragment);
+        mTabsAdapter.addTab(mActionBar.newTab().setText("Mentions"), mMentionsFragment);
+        mTabsAdapter.addTab(mActionBar.newTab().setText("DM"), mDmFragment);
 
         //Progress spinner for our refresh menu item
         mProgressBar = new ProgressBar(this);
         mProgressBar.setIndeterminate(true);
+
+        if(savedInstanceState != null) {
+            mIsRefreshing = savedInstanceState.getBoolean(REFRESHING, false);
+        }
     }
 
     @Override
     public void onSaveInstanceState(Bundle out) {
         super.onSaveInstanceState(out);
 
-        if(mTimelineFragment != null && mDmFragment.isAdded()) {
+        if(mTimelineFragment != null && mTimelineFragment.isAdded()) {
             mFragmentManager.putFragment(out, TIMELINE_FRAGMENT, mTimelineFragment);
         }
 
-        if(mMentionsFragment != null && mDmFragment.isAdded()) {
+        if(mMentionsFragment != null && mMentionsFragment.isAdded()) {
             mFragmentManager.putFragment(out, MENTIONS_FRAGMENT, mMentionsFragment);
         }
 
         if(mDmFragment != null && mDmFragment.isAdded()) {
             mFragmentManager.putFragment(out, DM_FRAGMENT, mDmFragment);
         }
+
+        out.putBoolean(REFRESHING, mIsRefreshing);
     }
 
     @Override
@@ -175,6 +183,10 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
                 f.startRefresh();
                 mIsRefreshing = true;
                 invalidateOptionsMenu();
+                return true;
+
+            case MenuRes.SEARCH:
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

@@ -30,7 +30,8 @@ import com.github.droidfu.widgets.WebImageView;
  * Date: 22/11/11 2:47 PM
  * Description :
  *
- * TODO: Set an image as empty list view
+ * TODO: - Set an image as empty list view
+ *       - Bug when pressing refresh after rotate (while dm tab is selected)
  */
 public class HomeTimelineFragment extends BaseFragment implements LoaderManager.LoaderCallbacks<Cursor>, SimpleCursorAdapter.ViewBinder {
     private static final String TAG = HomeTimelineFragment.class.getSimpleName();
@@ -70,7 +71,7 @@ public class HomeTimelineFragment extends BaseFragment implements LoaderManager.
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        setRetainInstance(true);
+        //setRetainInstance(true);
 
     }
 
@@ -158,9 +159,13 @@ public class HomeTimelineFragment extends BaseFragment implements LoaderManager.
 
     @Override
     public void startRefresh() {
-        Intent intent = new Intent(getActivity(), DownloadService.class);
-        intent.putExtra(DownloadService.TYPE, DownloadService.Data.HOME_TIMELINE);
-        getActivity().startService(intent);
+        if(getActivity() != null) {
+            Intent intent = new Intent(getActivity(), DownloadService.class);
+            intent.putExtra(DownloadService.TYPE, DownloadService.Data.HOME_TIMELINE);
+            getActivity().startService(intent);
+        } else {
+            Log.w(TAG, "startRefresh():Activity was null");
+        }
     }
 
     @Override

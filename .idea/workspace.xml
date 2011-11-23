@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_LOG_LEVEL" value="ERROR" />
-  </component>
   <component name="ChangeListManager">
     <list default="true" id="3c85e51a-6067-47e8-a25f-ef91a732648b" name="Default" comment="" />
     <ignored path="TweeterTweeter.iws" />
@@ -65,16 +62,7 @@
       <file leaf-file-name="HomeTimelineFragment.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Fragment/HomeTimelineFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="177" column="23" selection-start="5877" selection-end="5877" vertical-scroll-proportion="1.0440528">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MainActivity.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Activity/Phone/MainActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="170" column="48" selection-start="5753" selection-end="5753" vertical-scroll-proportion="0.0">
+            <state line="33" column="76" selection-start="1183" selection-end="1183" vertical-scroll-proportion="-1.2027231">
               <folding />
             </state>
           </provider>
@@ -83,7 +71,34 @@
       <file leaf-file-name="BaseFragment.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Fragment/BaseFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="86" column="72" selection-start="2813" selection-end="2813" vertical-scroll-proportion="0.0">
+            <state line="72" column="0" selection-start="2297" selection-end="2297" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FragmentManagerImpl.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/android_workspace/ActionBarSherlock/src/android/support/v4/app/FragmentManagerImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="577" column="37" selection-start="23087" selection-end="23372" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TabsAdapter.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/UI/TabsAdapter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="68" column="24" selection-start="2043" selection-end="2043" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DashboardFragment.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Fragment/DashboardFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="30" column="17" selection-start="850" selection-end="850" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -91,19 +106,28 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AndroidManifest.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
+      <file leaf-file-name="ActionBarWrapper.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/android_workspace/ActionBarSherlock/src/com/actionbarsherlock/internal/app/ActionBarWrapper.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="65" column="56" selection-start="2615" selection-end="2615" vertical-scroll-proportion="0.0">
+            <state line="564" column="45" selection-start="18717" selection-end="18717" vertical-scroll-proportion="-18.653847">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LoginActivity.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Activity/Phone/LoginActivity.java">
+      <file leaf-file-name="MainActivity.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Activity/Phone/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="50" column="43" selection-start="1714" selection-end="1714" vertical-scroll-proportion="0.0">
+            <state line="96" column="77" selection-start="3321" selection-end="3321" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BaseProvider.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Data/BaseProvider.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="64" column="11" selection-start="2181" selection-end="2181" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -141,22 +165,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/UI/TabsAdapter.java" />
-        <option value="$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/TTApplication.java" />
-        <option value="$PROJECT_DIR$/res/values-land/styles.xml" />
         <option value="$PROJECT_DIR$/res/layout/list_item_timeline.xml" />
         <option value="$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Receiver/PortableReceiver.java" />
         <option value="$PROJECT_DIR$/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Fragment/LoginFragment.java" />
-        <option value="$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Fragment/DashboardFragment.java" />
         <option value="$PROJECT_DIR$/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Data/BaseProvider.java" />
         <option value="$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Data/Database.java" />
         <option value="$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Service/DownloadService.java" />
-        <option value="$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Fragment/HomeTimelineFragment.java" />
         <option value="$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Fragment/UpdateableFragment.java" />
-        <option value="$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Activity/Phone/MainActivity.java" />
+        <option value="$USER_HOME$/android_workspace/ActionBarSherlock/src/com/actionbarsherlock/internal/app/ActionBarImpl.java" />
+        <option value="$USER_HOME$/android_workspace/ActionBarSherlock/src/com/actionbarsherlock/internal/app/ActionBarWrapper.java" />
         <option value="$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Fragment/BaseFragment.java" />
+        <option value="$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Fragment/DashboardFragment.java" />
+        <option value="$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/UI/TabsAdapter.java" />
+        <option value="$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Data/BaseProvider.java" />
+        <option value="$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Activity/Phone/MainActivity.java" />
+        <option value="$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Fragment/HomeTimelineFragment.java" />
       </list>
     </option>
   </component>
@@ -231,6 +255,28 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="TweeterTweeter" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TweeterTweeter" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TweeterTweeter" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TweeterTweeter" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="UI" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -360,11 +406,69 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TweeterTweeter" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ActionBarSherlock" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="internal" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TweeterTweeter" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ActionBarSherlock" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="internal" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TweeterTweeter" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ActionBarSherlock" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="v4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="PackagesPane" />
-      <pane id="Favorites" />
       <pane id="Scope" />
+      <pane id="Favorites" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -381,9 +485,9 @@
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
-    <property name="options.searchVisible" value="true" />
     <property name="dynamic.classpath" value="false" />
+    <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -559,6 +663,7 @@
     <option name="IGNORE_SPACES_IN_ANNOTATE" value="true" />
     <option name="SHOW_MERGE_SOURCES_IN_ANNOTATE" value="true" />
     <option name="FORCE_UPDATE" value="false" />
+    <configuration useDefault="true">$USER_HOME$/.subversion_IDEA</configuration>
     <myIsUseDefaultProxy>false</myIsUseDefaultProxy>
   </component>
   <component name="TaskManager">
@@ -591,7 +696,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="22" width="1853" height="1178" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -605,7 +710,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24944568" sideWeight="0.67044383" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295562" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3295562" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Android Logcat" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295562" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -661,118 +766,108 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/android_workspace/ActionBarSherlock/src/android/support/v4/app/FragmentActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="742" column="40" selection-start="26864" selection-end="26873" vertical-scroll-proportion="0.52125984">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/list_item_timeline.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="50" selection-start="1545" selection-end="1545" vertical-scroll-proportion="0.5234493">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Receiver/BootReceiver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="45" selection-start="342" selection-end="342" vertical-scroll-proportion="0.04405286">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="94" selection-start="373" selection-end="373" vertical-scroll-proportion="0.113464445">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Fragment/LoginFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="93" column="5" selection-start="2597" selection-end="2597" vertical-scroll-proportion="0.28744328">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="65" column="56" selection-start="2615" selection-end="2615" vertical-scroll-proportion="0.0">
+        <state line="65" column="56" selection-start="2615" selection-end="2615" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Activity/Phone/LoginActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="50" column="43" selection-start="1714" selection-end="1714" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Service/DownloadService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="104" column="28" selection-start="3094" selection-end="3094" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Data/Database.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="130" column="44" selection-start="4445" selection-end="4445" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/android_workspace/ActionBarSherlock/src/android/support/v4/app/ActionBar.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="177" column="39" selection-start="5693" selection-end="5756" vertical-scroll-proportion="3.6850393">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Receiver/PortableReceiver.java">
+    <entry file="file://$USER_HOME$/android_workspace/ActionBarSherlock/src/com/actionbarsherlock/internal/app/ActionBarImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="8" selection-start="557" selection-end="557" vertical-scroll-proportion="0.0">
+        <state line="398" column="48" selection-start="12909" selection-end="12909" vertical-scroll-proportion="0.592126">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/android_workspace/ActionBarSherlock/src/android/support/v4/view/ViewPager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1220" column="0" selection-start="45404" selection-end="45404" vertical-scroll-proportion="0.33282906">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/android-sdk/platforms/android-13/android.jar!/android/app/ActionBar.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="25" column="25" selection-start="1086" selection-end="1086" vertical-scroll-proportion="0.5219365">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/android_workspace/ActionBarSherlock/src/com/actionbarsherlock/internal/app/ActionBarWrapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="564" column="45" selection-start="18717" selection-end="18717" vertical-scroll-proportion="-18.653847">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/android_workspace/ActionBarSherlock/src/android/support/v4/app/FragmentManagerImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="577" column="37" selection-start="23087" selection-end="23372" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Fragment/DashboardFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="17" selection-start="850" selection-end="850" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Activity/Phone/LoginActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="50" column="43" selection-start="1714" selection-end="1714" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Data/Database.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="130" column="44" selection-start="4445" selection-end="4445" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Service/DownloadService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="104" column="28" selection-start="3094" selection-end="3094" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Data/BaseProvider.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="89" column="14" selection-start="2764" selection-end="2764" vertical-scroll-proportion="1.7700454">
+        <state line="64" column="11" selection-start="2181" selection-end="2181" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Fragment/UpdateableFragment.java">
+    <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/UI/TabsAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="17" selection-start="99" selection-end="99" vertical-scroll-proportion="0.090771556">
+        <state line="68" column="24" selection-start="2043" selection-end="2043" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Activity/Phone/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="170" column="48" selection-start="5753" selection-end="5753" vertical-scroll-proportion="0.0">
+        <state line="96" column="77" selection-start="3321" selection-end="3321" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Fragment/BaseFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="86" column="72" selection-start="2813" selection-end="2813" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Fragment/DashboardFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="5" selection-start="383" selection-end="383" vertical-scroll-proportion="0.31770045">
+        <state line="72" column="0" selection-start="2297" selection-end="2297" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Fragment/HomeTimelineFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="177" column="23" selection-start="5877" selection-end="5877" vertical-scroll-proportion="1.0440528">
+        <state line="33" column="76" selection-start="1183" selection-end="1183" vertical-scroll-proportion="-1.2027231">
           <folding />
         </state>
       </provider>
