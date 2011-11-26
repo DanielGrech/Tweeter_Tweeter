@@ -53,6 +53,7 @@ public class Database {
         String latitude = "";
         String longitude = "";
         String retweetedScreenName = "";
+        String retweetedUserImg = "";
 
         if(status.getMediaEntities() != null) {
             for(MediaEntity me: status.getMediaEntities()) {
@@ -90,6 +91,9 @@ public class Database {
         if(status.getRetweetedStatus() != null) {
             retweetedScreenName =
                     status.getRetweetedStatus().getUser().getScreenName();
+
+            retweetedUserImg =
+                    status.getRetweetedStatus().getUser().getProfileImageURL().toString().replace("_normal.", "_bigger.");
         }
 
         if(user != null) {
@@ -106,6 +110,7 @@ public class Database {
         values.put(Field.SRC, status.getSource());
         values.put(Field.IN_REPLY, status.getInReplyToScreenName());
         values.put(Field.ORIG_TWEET, retweetedScreenName);
+        values.put(Field.ORIG_TWEET_IMG, retweetedUserImg);
         values.put(Field.RETWEET_COUNT, status.getRetweetCount());
         values.put(Field.PLACE_NAME, placeName);
         values.put(Field.LAT, latitude);
@@ -167,6 +172,7 @@ public class Database {
                     Field.SRC + " text, " +
                     Field.IN_REPLY + " text, " +
                     Field.ORIG_TWEET + " text, " +
+                    Field.ORIG_TWEET_IMG + " text, " +
                     Field.RETWEET_COUNT + " int, " +
                     Field.PLACE_NAME + " text, " +
                     Field.LAT + " text, " +
@@ -205,6 +211,7 @@ public class Database {
 
         public static final String IN_REPLY = "in_reply_to_screenname";
         public static final String ORIG_TWEET = "orig_tweeter_name";
+        public static final String ORIG_TWEET_IMG = "orig_tweeter_img";
         public static final String RETWEET_COUNT = "retweet_count";
         public static final String PLACE_NAME = "place_name";
         public static final String LAT = "latitude";

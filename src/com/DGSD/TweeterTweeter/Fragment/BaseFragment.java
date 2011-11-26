@@ -9,13 +9,14 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import com.DGSD.TweeterTweeter.Receiver.PortableReceiver;
 import com.DGSD.TweeterTweeter.Service.DownloadService;
+import com.DGSD.TweeterTweeter.UI.QuickPopup;
 
 /**
  * Author: Daniel Grech
  * Date: 22/11/11 5:49 PM
  * Description: Holds common properties for all fragments
  */
-public abstract class BaseFragment extends DialogFragment implements UpdateableFragment{
+public abstract class BaseFragment extends DialogFragment implements UpdateableFragment, QuickPopup.OnPopupItemClickListener{
     private static final String TAG = BaseFragment.class.getSimpleName();
 
     protected OnRefreshListener mRefreshListener;
@@ -26,6 +27,8 @@ public abstract class BaseFragment extends DialogFragment implements UpdateableF
 
     protected FragmentActivity mActivity;
 
+    protected QuickPopup mQuickPopup;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,61 +37,77 @@ public abstract class BaseFragment extends DialogFragment implements UpdateableF
         mReceiver = new PortableReceiver();
 
         mReceiver.setReceiver(new PortableReceiver.Receiver() {
-			@Override
-			public void onReceive(Context context, Intent intent) {
-				if(intent.getAction().equals(DownloadService.Result.DATA)) {
-					Log.v(TAG, "Data Received");
-					onRefreshData();
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if(intent.getAction().equals(DownloadService.Result.DATA)) {
+                    Log.v(TAG, "Data Received");
+                    onRefreshData();
                     if(mRefreshListener != null) {
                         mRefreshListener.onRefreshData();
+                    } else {
+                        Log.v(TAG, "Refresh Listener was null");
                     }
-				}
-				else if(intent.getAction().equals(DownloadService.Result.NO_DATA)) {
-					Log.v(TAG, "No Data Received");
-					onRefreshNoData();
+                }
+                else if(intent.getAction().equals(DownloadService.Result.NO_DATA)) {
+                    Log.v(TAG, "No Data Received");
+                    onRefreshNoData();
                     if(mRefreshListener != null) {
                         mRefreshListener.onRefreshNoData();
+                    } else {
+                        Log.v(TAG, "Refresh Listener was null");
                     }
-				}
-				else if(intent.getAction().equals(DownloadService.Result.ERROR)) {
+                }
+                else if(intent.getAction().equals(DownloadService.Result.ERROR)) {
                     Log.v(TAG, "Error Received");
-					onRefreshError();
+                    onRefreshError();
                     if(mRefreshListener != null) {
                         mRefreshListener.onRefreshError();
+                    } else {
+                        Log.v(TAG, "Refresh Listener was null");
                     }
-				}
-				else {
-					Log.v(TAG, "Received Mystery Intent: " + intent.getAction());
-				}
-			}
-		});
+                }
+                else {
+                    Log.w(TAG, "Received Mystery Intent: " + intent.getAction());
+                }
+            }
+        });
+
+        /*mQuickPopup = (Utils.isInLandscape(mActivity)) ?
+                new QuickPopup(mActivity, QuickPopup.HORIZONTAL) :
+                new QuickPopup(mActivity, QuickPopup.VERTICAL); */
+        mQuickPopup = new QuickPopup(mActivity, QuickPopup.HORIZONTAL);
     }
 
     @Override
-	public void onResume() {
-		super.onResume();
-		Log.v(TAG, "onResume()");
+    public void onResume() {
+        super.onResume();
+        Log.v(TAG, "onResume()");
 
-		// Register the receiver
-		getActivity().registerReceiver(mReceiver, new IntentFilter(DownloadService.Result.DATA),
-				BROADCAST_RECEIVE_DATA, null);
+        // Register the receiver
+        getActivity().registerReceiver(mReceiver, new IntentFilter(DownloadService.Result.DATA),
+                BROADCAST_RECEIVE_DATA, null);
 
-		getActivity().registerReceiver(mReceiver, new IntentFilter(DownloadService.Result.NO_DATA),
-				BROADCAST_RECEIVE_DATA, null);
+        getActivity().registerReceiver(mReceiver, new IntentFilter(DownloadService.Result.NO_DATA),
+                BROADCAST_RECEIVE_DATA, null);
 
-		getActivity().registerReceiver(mReceiver, new IntentFilter(DownloadService.Result.ERROR),
-				BROADCAST_RECEIVE_DATA, null);
-	}
+        getActivity().registerReceiver(mReceiver, new IntentFilter(DownloadService.Result.ERROR),
+                BROADCAST_RECEIVE_DATA, null);
+    }
 
-	@Override
-	public void onPause() {
-		super.onPause();
-		Log.v(TAG, "onPause()");
-		getActivity().unregisterReceiver(mReceiver);
-	}
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.v(TAG, "onPause()");
+        getActivity().unregisterReceiver(mReceiver);
+    }
 
     public void setOnRefreshListener(OnRefreshListener listener) {
         mRefreshListener = listener;
+    }
+
+    @Override
+    public void onPopupItemClick(QuickPopup source, int pos, int popupId) {
+        Log.w(TAG, "onItemClick() not overridden");
     }
 
     @Override
@@ -116,8 +135,17 @@ public abstract class BaseFragment extends DialogFragment implements UpdateableF
     }
 
     public interface OnRefreshListener {
+        public void onStartRefresh();
         public void onRefreshData();
         public void onRefreshNoData();
         public void onRefreshError();
+    }
+
+    public static class PopupItemId {
+        public static final int RETWEET = 0;
+        public static final int REPLY = 1;
+        public static final int FAVOURITE = 2;
+        public static final int SHARE = 3;
+
     }
 }
