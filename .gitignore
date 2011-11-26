@@ -1,3 +1,4 @@
 out/*
 *.apk
 *.class
+*.DS_Store

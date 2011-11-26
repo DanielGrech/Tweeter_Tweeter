@@ -1,6 +1,7 @@
 package com.DGSD.TweeterTweeter.Fragment;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -17,12 +18,18 @@ import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.DGSD.TweeterTweeter.Data.Database;
 import com.DGSD.TweeterTweeter.Data.HomeTimelineProvider;
 import com.DGSD.TweeterTweeter.R;
 import com.DGSD.TweeterTweeter.Service.DownloadService;
+import com.DGSD.TweeterTweeter.UI.PopupItem;
+import com.DGSD.TweeterTweeter.UI.QuickPopup;
+import com.DGSD.TweeterTweeter.UI.StatusDataHolder;
 import com.github.droidfu.widgets.WebImageView;
 
 /**
@@ -30,10 +37,14 @@ import com.github.droidfu.widgets.WebImageView;
  * Date: 22/11/11 2:47 PM
  * Description :
  *
- * TODO: - Set an image as empty list view
- *       - Bug when pressing refresh after rotate (while dm tab is selected)
+ * TODO:
+ *       - Set an image as empty list view
+ *       - Long press on list item = <IF phone THEN quick_action ELSE IF tablet THEN action_bar_contextual>
+ *       - Tap on list item = new activity with single tweet
+ *
  */
-public class HomeTimelineFragment extends BaseFragment implements LoaderManager.LoaderCallbacks<Cursor>, SimpleCursorAdapter.ViewBinder {
+public class HomeTimelineFragment extends BaseFragment implements LoaderManager.LoaderCallbacks<Cursor>,
+        SimpleCursorAdapter.ViewBinder, AdapterView.OnItemLongClickListener {
     private static final String TAG = HomeTimelineFragment.class.getSimpleName();
 
     private ListView mListView;
@@ -41,16 +52,19 @@ public class HomeTimelineFragment extends BaseFragment implements LoaderManager.
     private SimpleCursorAdapter mAdapter;
 
     private static final String[] FROM = { Database.Field.CREATED_AT, Database.Field.TEXT,
-            Database.Field.SCREEN_NAME, Database.Field.IMG, Database.Field.ID };
+            Database.Field.SCREEN_NAME, Database.Field.IMG, Database.Field.ORIG_TWEET };
 
-    private static final int[] TO = { R.id.date, R.id.tweet, R.id.name, R.id.image };
+    private static final int[] TO = { R.id.date, R.id.tweet, R.id.name, R.id.image, R.id.status };
 
     private static String[] ROWS_TO_RETURN = {
             Database.Field.CREATED_AT,
             Database.Field.TEXT,
             Database.Field.SCREEN_NAME,
             Database.Field.IMG,
-            Database.Field.ID
+            Database.Field.ID,
+            Database.Field.FAV,
+            Database.Field.ORIG_TWEET,
+            Database.Field.ORIG_TWEET_IMG
     };
 
     private static class CursorCols {
@@ -59,7 +73,12 @@ public class HomeTimelineFragment extends BaseFragment implements LoaderManager.
         public static int screen_name = -1;
         public static int img = -1;
         public static int id = -1;
+        public static int fav = -1;
+        public static int orig_tweeter = -1;
+        public static int orig_tweeter_img = -1;
     }
+
+    private StatusDataHolder mLastLongClickItem;
 
     public static HomeTimelineFragment newInstance() {
         HomeTimelineFragment f = new HomeTimelineFragment();
@@ -71,8 +90,17 @@ public class HomeTimelineFragment extends BaseFragment implements LoaderManager.
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        //setRetainInstance(true);
 
+        //Set up popup action items
+        Resources res = getResources();
+        mQuickPopup.addPopupItem(new PopupItem(PopupItemId.RETWEET, "Retweet", res.getDrawable(R.drawable.ic_popup_retweet)));
+        mQuickPopup.addPopupItem(new PopupItem(PopupItemId.REPLY, "Reply", res.getDrawable(R.drawable.ic_popup_reply)));
+        mQuickPopup.addPopupItem(new PopupItem(PopupItemId.FAVOURITE, "Favourite", res.getDrawable(R.drawable.ic_popup_favourite)));
+        mQuickPopup.addPopupItem(new PopupItem(PopupItemId.SHARE, "Share", res.getDrawable(R.drawable.ic_popup_share)));
+
+        mQuickPopup.setOnPopupItemClickListener(this);
+
+        startRefresh();
     }
 
     @Override
@@ -80,6 +108,8 @@ public class HomeTimelineFragment extends BaseFragment implements LoaderManager.
         View v = inflater.inflate(R.layout.fragment_list, container, false);
 
         mListView = (ListView) v.findViewById(R.id.list);
+        mListView.setOnItemLongClickListener(this);
+        mListView.setLayoutAnimation(AnimationUtils.loadLayoutAnimation(mActivity, R.anim.layout_animation));
 
         return v;
     }
@@ -112,17 +142,53 @@ public class HomeTimelineFragment extends BaseFragment implements LoaderManager.
             CursorCols.screen_name = cursor.getColumnIndex(Database.Field.SCREEN_NAME);
             CursorCols.img = cursor.getColumnIndex(Database.Field.IMG);
             CursorCols.id = cursor.getColumnIndex(Database.Field.ID);
+            CursorCols.fav = cursor.getColumnIndex(Database.Field.FAV);
+            CursorCols.orig_tweeter = cursor.getColumnIndex(Database.Field.ORIG_TWEET);
+            CursorCols.orig_tweeter_img = cursor.getColumnIndex(Database.Field.ORIG_TWEET_IMG);
         }
 
-        if(col == CursorCols.img) {
-            WebImageView img = (WebImageView) view;
-            img.setImageUrl(cursor.getString(CursorCols.img));
-            img.loadImage();
+        if(col == CursorCols.screen_name) {
+            TextView tv = (TextView) view;
+            String orig_tweeter = cursor.getString(CursorCols.orig_tweeter);
+
+            if(orig_tweeter.length() > 0) {
+                tv.setText(orig_tweeter);
+            } else {;
+                tv.setText(cursor.getString(CursorCols.screen_name));
+            }
 
             return true;
-        } else if(col == CursorCols.id) {
-            //Set the tag of this row to our id
-            ((ViewGroup)view.getParent()).setTag(cursor.getInt(CursorCols.id));
+        } else if(col == CursorCols.img) {
+            //If this is a retweet, show the original tweeters img, else show the regular img
+            WebImageView img = (WebImageView) view;
+            img.setImageUrl(cursor.getString(CursorCols.orig_tweeter_img).length() > 0 ?
+                    cursor.getString(CursorCols.orig_tweeter_img) : cursor.getString(CursorCols.img));
+            img.loadImage();
+
+            //Set the tag of this row
+            ViewGroup parent = (ViewGroup) view.getParent();
+            StatusDataHolder holder = null;
+
+            if(parent.getTag() == null) {
+                holder = new StatusDataHolder(cursor.getLong(CursorCols.id),
+                        cursor.getString(CursorCols.screen_name),
+                        cursor.getString(CursorCols.text));
+            } else {
+                holder = (StatusDataHolder) parent.getTag();
+                holder.id = cursor.getLong(CursorCols.id);
+                holder.user = cursor.getString(CursorCols.orig_tweeter).length() > 0 ?
+                        cursor.getString(CursorCols.orig_tweeter) : cursor.getString(CursorCols.screen_name);
+                holder.text = cursor.getString(CursorCols.text);
+            }
+
+            parent.setTag(holder);
+
+            //Set the bg color if favourite
+            if(cursor.getInt(CursorCols.fav) == 1) {
+                parent.setBackgroundResource(R.drawable.list_item_bg_favourite);
+            } else {
+                parent.setBackgroundColor(android.R.color.transparent);
+            }
 
             return true;
         } else if(col == CursorCols.created_at) {
@@ -130,9 +196,59 @@ public class HomeTimelineFragment extends BaseFragment implements LoaderManager.
             tv.setText(DateUtils.getRelativeTimeSpanString(mActivity,
                     Long.valueOf(cursor.getString(CursorCols.created_at))));
             return true;
+        } else if(col == CursorCols.text) {
+            TextView tv = (TextView) view;
+            String orig_tweeter = cursor.getString(CursorCols.orig_tweeter);
+
+            //If this is a retweet, get rid of the 'RT @username' at the beginning of a string
+            String text = cursor.getString(CursorCols.text);
+            if(orig_tweeter.length() > 0) {
+                text = text.replaceFirst("^RT @[A-Za-z0-9]+: ", "");
+            }
+
+            tv.setText(text);
+            return true;
+        } else if( col == CursorCols.orig_tweeter) {
+            TextView tv = (TextView) view;
+            String orig_tweeter = cursor.getString(CursorCols.orig_tweeter);
+
+            if(orig_tweeter.length() > 0) {
+                tv.setText(new StringBuilder().append("RT by @").append(cursor.getString(CursorCols.screen_name)).toString());
+                tv.setVisibility(View.VISIBLE);
+            } else {
+                tv.setVisibility(View.GONE);
+            }
+
+            return true;
         }
 
         return false;
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int pos, long id) {
+        mLastLongClickItem = (StatusDataHolder) view.getTag();
+        mQuickPopup.show(view);
+        return true;
+    }
+
+
+    @Override
+    public void onPopupItemClick(QuickPopup source, int pos, int popupId) {
+        if(mLastLongClickItem == null) {
+            Toast.makeText(mActivity, "Error accessing data. Please try again", Toast.LENGTH_LONG).show();
+            Log.w(TAG, "onPopupItemClick() - mLastLongClickItem is null");
+            return;
+        }
+        switch(popupId) {
+            case PopupItemId.SHARE:
+                Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, mLastLongClickItem.text);
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Tweet by " + mLastLongClickItem.user);
+                mActivity.startActivity(Intent.createChooser(sharingIntent, "Share tweet"));
+                break;
+        }
     }
 
     @Override
@@ -160,6 +276,13 @@ public class HomeTimelineFragment extends BaseFragment implements LoaderManager.
     @Override
     public void startRefresh() {
         if(getActivity() != null) {
+            Log.i(TAG, "startRefresh()");
+            if(mRefreshListener != null) {
+                mRefreshListener.onStartRefresh();
+            } else {
+                Log.w(TAG, "Refresh listener was null");
+            }
+
             Intent intent = new Intent(getActivity(), DownloadService.class);
             intent.putExtra(DownloadService.TYPE, DownloadService.Data.HOME_TIMELINE);
             getActivity().startService(intent);

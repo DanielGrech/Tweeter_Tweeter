@@ -4,9 +4,13 @@
 	<color name="actionbar_end">#F0F0F0</color>
     <color name="action_bar_title">#000000</color>
     <color name="tab_text">#FFFFFF</color>
-    <color name="tab_bar_background">#4C4C4C</color>
+    <color name="tab_bar_background_start">#4A4A4A</color>
+    <color name="tab_bar_background_end">#707070</color>
     <color name="horizontal_line">#DEDEDE</color>
     <color name="edit_note_line">#FAFAFA</color>
     <color name="login_header_start">#4A4A4A</color>
 	<color name="login_header_end">#707070</color>
+    <color name="list_item_favourite_start">#FFFFCC</color>
+    <color name="list_item_favourite_end">#FFFFEE</color>
+
 </resources>

@@ -4,4 +4,11 @@
 	<string name="consumer_secret">HJiwIdO43SfOhxH1aZIfknNmhcN581kgScAhoN2Wbo</string>
     <string name="receive_twitter_data">Receive Twitter Data</string>
 	<string name="receive_data_description">Allow this app to fetch data from twitter</string>
+
+    <string name="btn_dashboard_dm">Direct Messages</string>
+    <string name="btn_dashboard_stream">Timeline</string>
+    <string name="btn_dashboard_favourites">Favourites</string>
+    <string name="btn_dashboard_trends">Trends</string>
+    <string name="btn_dashboard_mentions">Mentions</string>
+    <string name="btn_dashboard_following">Following</string>
 </resources>
