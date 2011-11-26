@@ -53,6 +53,12 @@ public class DownloadService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent inIntent) {
+        if(mTwitter == null) {
+            //No point continuing
+            Log.w(TAG, "onHandleIntent(): Twitter Factory was null. Exiting");
+            return;
+        }
+
         int dataType = inIntent.getIntExtra(TYPE, Data.ALL_DATA);
 
         Intent intent;

@@ -71,7 +71,6 @@ public class LoginActivity extends FragmentActivity implements TwDialogListener 
         }
 
         mActionBar = getSupportActionBar();
-        mActionBar.setTitle("Welcome!");
 
         //Make sure the progress bar is hidden
         setProgressBarIndeterminateVisibility(Boolean.FALSE);
@@ -93,17 +92,19 @@ public class LoginActivity extends FragmentActivity implements TwDialogListener 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.add(0, MenuRes.SIGN_IN, 0, "Sign In")
-                .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
 
         menu.add(0, MenuRes.SEARCH, 0, "Search")
                 .setIcon(R.drawable.ic_menu_search)
-                .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 
         menu.add(0, MenuRes.SETTINGS, 0, "Settings")
-                .setIcon(R.drawable.ic_menu_settings);
+                .setIcon(R.drawable.ic_menu_settings)
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
 
         menu.add(0, MenuRes.ABOUT, 0, "About")
-                .setIcon(R.drawable.ic_menu_help);
+                .setIcon(R.drawable.ic_menu_help)
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
 
         return super.onCreateOptionsMenu(menu);
     }

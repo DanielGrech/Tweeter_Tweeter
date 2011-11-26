@@ -29,9 +29,10 @@
         <activity android:name=".Activity.MainChoiceActivity" />
 
         <!-- Phone Activities -->
-        <activity android:name=".Activity.Phone.LoginActivity" />
+        <activity android:name=".Activity.Phone.LoginActivity"/>
         <activity android:name=".Activity.Phone.MainActivity" />
         <activity android:name=".Activity.Phone.DashboardActivity" />
+        <activity android:name=".Activity.Phone.NewTweetActivity" android:label="New Tweet"/>
 
         <!-- Services -->
         <service android:name=".Service.DownloadService" />

@@ -8,12 +8,15 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.*;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import com.DGSD.TweeterTweeter.Activity.DashboardChoiceActivity;
 import com.DGSD.TweeterTweeter.Activity.MainChoiceActivity;
 import com.DGSD.TweeterTweeter.Fragment.BaseFragment;
 import com.DGSD.TweeterTweeter.Fragment.DashboardFragment;
 import com.DGSD.TweeterTweeter.Fragment.HomeTimelineFragment;
+import com.DGSD.TweeterTweeter.Fragment.PlaceholderFragment;
 import com.DGSD.TweeterTweeter.R;
 import com.DGSD.TweeterTweeter.UI.TabsAdapter;
 
@@ -37,8 +40,6 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
     private FragmentManager mFragmentManager;
 
     private ActionBar mActionBar;
-
-    private ProgressBar mProgressBar;
 
     private BaseFragment mTimelineFragment;
 
@@ -77,12 +78,12 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
 
         if(mMentionsFragment == null) {
             Log.v(TAG, "Getting new mentions fragment");
-            mMentionsFragment = DashboardFragment.newInstance();
+            mMentionsFragment = new PlaceholderFragment();
         }
 
         if(mDmFragment == null) {
             Log.v(TAG, "Getting new dm fragment");
-            mDmFragment = DashboardFragment.newInstance();
+            mDmFragment = new PlaceholderFragment();
         }
 
         mTimelineFragment.setOnRefreshListener(this);
@@ -102,9 +103,6 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
         mTabsAdapter.addTab(mActionBar.newTab().setText("Mentions"), mMentionsFragment);
         mTabsAdapter.addTab(mActionBar.newTab().setText("DM"), mDmFragment);
 
-        //Progress spinner for our refresh menu item
-        mProgressBar = new ProgressBar(this);
-        mProgressBar.setIndeterminate(true);
 
         if(savedInstanceState != null) {
             mIsRefreshing = savedInstanceState.getBoolean(REFRESHING, false);
@@ -145,12 +143,12 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        menu.add(0, MenuRes.NEW_TWEET, 0, "New Tweet")
-                .setIcon(R.drawable.ic_menu_compose)
-                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-
         menu.add(0, MenuRes.REFRESH, 0, "Refresh")
                 .setIcon(R.drawable.ic_menu_refresh)
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+
+        menu.add(0, MenuRes.NEW_TWEET, 0, "New Tweet")
+                .setIcon(R.drawable.ic_menu_compose)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 
         menu.add(0, MenuRes.SEARCH, 0, "Search")
@@ -171,7 +169,7 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
         // Update the refresh button.
         MenuItem item = menu.findItem(MenuRes.REFRESH);
         if(mIsRefreshing) {
-            item.setActionView(mProgressBar);
+            item.setActionView(R.layout.action_bar_indeterminate_progress);
         } else {
             item.setActionView(null);
         }
@@ -184,21 +182,32 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
-            case android.R.id.home:
+            case android.R.id.home: {
                 Intent i = new Intent(this, DashboardChoiceActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
                 finish();
                 return true;
-            case MenuRes.REFRESH:
+            }
+            case MenuRes.REFRESH: {
                 refreshCurrentFragment();
                 return true;
+            }
 
-            case MenuRes.SEARCH:
+            case MenuRes.NEW_TWEET: {
+                Intent i = new Intent(this, NewTweetActivity.class);
+                startActivity(i);
+                return true;
+            }
+
+            case MenuRes.SEARCH: {
 
                 return true;
-            default:
+            }
+
+            default: {
                 return super.onOptionsItemSelected(item);
+            }
         }
     }
 
