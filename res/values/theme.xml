@@ -2,6 +2,7 @@
     <style name="Theme.TweeterTweeter" parent="@style/Theme.Sherlock.Light">
         <item name="abBackground">@drawable/action_bar_background</item>
         <item name="abTitleTextStyle">@style/action_bar_title</item>
+        <item name="abDivider">@null</item>
         <item name="android:windowBackground">@drawable/background_repeat</item>
         <item name="actionBarTabStyle">@style/action_bar_tab_view</item>
         <item name="actionBarTabBarStyle">@style/action_bar_tab_bar</item>

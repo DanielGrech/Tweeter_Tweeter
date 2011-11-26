@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:text="Trends"
-            android:textAppearance="@android:style/TextAppearance.Holo.Large"
+            android:textAppearance="@android:style/TextAppearance.Large"
             android:textColor="@android:color/white"
             android:padding="6dip"/>
 
