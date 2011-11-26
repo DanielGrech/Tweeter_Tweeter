@@ -13,10 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import com.DGSD.TweeterTweeter.Activity.DashboardChoiceActivity;
 import com.DGSD.TweeterTweeter.Activity.MainChoiceActivity;
-import com.DGSD.TweeterTweeter.Fragment.BaseFragment;
-import com.DGSD.TweeterTweeter.Fragment.DashboardFragment;
-import com.DGSD.TweeterTweeter.Fragment.HomeTimelineFragment;
-import com.DGSD.TweeterTweeter.Fragment.PlaceholderFragment;
+import com.DGSD.TweeterTweeter.Fragment.*;
 import com.DGSD.TweeterTweeter.R;
 import com.DGSD.TweeterTweeter.UI.TabsAdapter;
 
@@ -78,7 +75,7 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
 
         if(mMentionsFragment == null) {
             Log.v(TAG, "Getting new mentions fragment");
-            mMentionsFragment = new PlaceholderFragment();
+            mMentionsFragment = MentionsFragment.newInstance();
         }
 
         if(mDmFragment == null) {

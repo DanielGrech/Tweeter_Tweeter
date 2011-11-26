@@ -130,16 +130,19 @@ public class Database {
      */
     public Long getLastTweetId(final String table) {
         SQLiteDatabase db = mDb.getReadableDatabase();
-        try {
-            String[] max_created = new String[] {
-                    new StringBuilder().append("MAX(")
-                            .append(Field.ID)
-                            .append(")")
-                            .toString()
-            };
 
-            Cursor cursor = db.query(table, max_created,
-                    null, null, null,null, null);
+        try {
+            String max_created = new StringBuilder().append(Field.CREATED_AT)
+                                                    .append(" = (SELECT MAX(")
+                                                    .append(Field.CREATED_AT)
+                                                    .append(") FROM ")
+                                                    .append(table)
+                                                    .append(")")
+                                                    .toString();
+
+            //SELECT _id FROM table WHERE created_at = (SELECT MAX(created_at) FROM table);
+            Cursor cursor = db.query(table, new String[] { Field.ID },
+                    max_created, null, null,null, null);
 
             try {
                 return cursor.moveToFirst() ? cursor.getLong(0) : -1;
@@ -160,6 +163,7 @@ public class Database {
         public void onCreate(SQLiteDatabase db) {
             Log.i(TAG, "Creating database: " + DATABASE);
 
+            /* Timeline-based Tables */
             String temp = "create table " + Table.TEMPLATE + " (" +
                     Field.USER + " text, " +
                     Field.ID + " text primary key, " +
@@ -183,6 +187,8 @@ public class Database {
                     Field.USER_ENT + " text)";
 
             db.execSQL(temp.replace(Table.TEMPLATE, Table.HOME_TIMELINE));
+            db.execSQL(temp.replace(Table.TEMPLATE, Table.MENTIONS));
+
         }
 
         @Override
@@ -196,6 +202,8 @@ public class Database {
         public static final String TEMPLATE = "<!@#Template!@#>";
 
         public static final String HOME_TIMELINE = "home_timeline";
+
+        public static final String MENTIONS = "mentions";
     }
 
     public static class Field {

@@ -23,6 +23,10 @@
             android:multiprocess="true"
             android:name="com.DGSD.TweeterTweeter.Data.HomeTimelineProvider" />
 
+        <provider android:authorities="com.DGSD.TweeterTweeter.Data.MentionsProvider"
+            android:multiprocess="true"
+            android:name="com.DGSD.TweeterTweeter.Data.MentionsProvider" />
+
         <!-- Choice Activities -->
         <activity android:name=".Activity.LoginChoiceActivity" />
         <activity android:name=".Activity.DashboardChoiceActivity" />

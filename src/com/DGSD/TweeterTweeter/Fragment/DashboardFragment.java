@@ -3,7 +3,6 @@ package com.DGSD.TweeterTweeter.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.Menu;
-import android.support.v4.view.MenuInflater;
 import android.support.v4.view.MenuItem;
 import android.view.LayoutInflater;
 import android.view.View;
