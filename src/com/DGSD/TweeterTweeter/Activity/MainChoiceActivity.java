@@ -12,11 +12,23 @@ public class MainChoiceActivity extends BaseChoiceActivity {
 
     @Override
     public Intent getPhoneIntent() {
-        return new Intent(this, com.DGSD.TweeterTweeter.Activity.Phone.MainActivity.class);
+        Intent intent = new Intent(this, com.DGSD.TweeterTweeter.Activity.Phone.MainActivity.class);
+
+        return intent;
     }
 
     @Override
     public Intent getTabletIntent() {
         return null;
+    }
+
+    public static class EXTRA {
+        public static final String SHOW_SCREEN = "_screen";
+
+        public static final int HOME_TIMELINE = 1;
+
+        public static final int MENTIONS = 2;
+
+        public static final int DM = 3;
     }
 }

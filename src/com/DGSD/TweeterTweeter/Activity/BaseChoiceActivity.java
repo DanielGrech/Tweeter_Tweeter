@@ -3,7 +3,7 @@ package com.DGSD.TweeterTweeter.Activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import com.DGSD.TweeterTweeter.Utils;
+import com.DGSD.TweeterTweeter.Utils.Utils;
 
 /**
  * Created By: Daniel Grech

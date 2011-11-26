@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.DGSD.TweeterTweeter.UI.DashboardLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <Button android:id="@+id/btn_dashboard_timeline"
+        style="@style/DashboardButton"
+        android:contentDescription="Home Timeline"
+        android:text="@string/btn_dashboard_stream"
+        android:drawableTop="@drawable/ic_dashboard_stream" />
+    <Button android:id="@+id/btn_dashboard_mentions"
+        style="@style/DashboardButton"
+        android:contentDescription="Mentions"
+        android:text="@string/btn_dashboard_mentions"
+        android:drawableTop="@drawable/ic_dashboard_mentions" />
+    <Button android:id="@+id/btn_dashboard_dm"
+        style="@style/DashboardButton"
+        android:contentDescription="Direct Messages"
+        android:text="@string/btn_dashboard_dm"
+        android:drawableTop="@drawable/ic_dashboard_dm" />
+    <Button android:id="@+id/btn_dashboard_favourites"
+        style="@style/DashboardButton"
+        android:contentDescription="Favourite Tweets"
+        android:text="@string/btn_dashboard_favourites"
+        android:drawableTop="@drawable/ic_dashboard_favourites" />
+    <Button android:id="@+id/btn_dashboard_following"
+        style="@style/DashboardButton"
+        android:contentDescription="Following"
+        android:text="@string/btn_dashboard_following"
+        android:drawableTop="@drawable/ic_dashboard_following" />
+    <Button android:id="@+id/btn_dashboard_trends"
+        style="@style/DashboardButton"
+        android:contentDescription="Trends"
+        android:text="@string/btn_dashboard_trends"
+        android:drawableTop="@drawable/ic_dashboard_trends" />
+
+</com.DGSD.TweeterTweeter.UI.DashboardLayout>

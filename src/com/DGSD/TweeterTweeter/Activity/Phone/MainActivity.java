@@ -1,5 +1,6 @@
 package com.DGSD.TweeterTweeter.Activity.Phone;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.*;
 import android.util.Log;
 import android.widget.ProgressBar;
+import com.DGSD.TweeterTweeter.Activity.DashboardChoiceActivity;
+import com.DGSD.TweeterTweeter.Activity.MainChoiceActivity;
 import com.DGSD.TweeterTweeter.Fragment.BaseFragment;
 import com.DGSD.TweeterTweeter.Fragment.DashboardFragment;
 import com.DGSD.TweeterTweeter.Fragment.HomeTimelineFragment;
@@ -18,8 +21,13 @@ import com.DGSD.TweeterTweeter.UI.TabsAdapter;
  * Author: Daniel Grech
  * Date: 22/11/11 2:19 PM
  * Description :
+ *
+ * TODO:
+ *        - Search view
+ *        - Dashboard view
+ *
  */
-public class MainActivity extends FragmentActivity implements ViewPager.OnPageChangeListener {
+public class MainActivity extends FragmentActivity implements ViewPager.OnPageChangeListener, BaseFragment.OnRefreshListener {
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private ViewPager mPager;
@@ -32,11 +40,11 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
 
     private ProgressBar mProgressBar;
 
-    private Fragment mTimelineFragment;
+    private BaseFragment mTimelineFragment;
 
-    private Fragment mMentionsFragment;
+    private BaseFragment mMentionsFragment;
 
-    private Fragment mDmFragment;
+    private BaseFragment mDmFragment;
 
     private boolean mIsRefreshing = false;
 
@@ -57,9 +65,9 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
         mFragmentManager = getSupportFragmentManager();
 
         if(savedInstanceState != null) {
-            mTimelineFragment = mFragmentManager.getFragment(savedInstanceState, TIMELINE_FRAGMENT);
-            mMentionsFragment = mFragmentManager.getFragment(savedInstanceState, MENTIONS_FRAGMENT);
-            mDmFragment = mFragmentManager.getFragment(savedInstanceState, DM_FRAGMENT);
+            mTimelineFragment = (BaseFragment) mFragmentManager.getFragment(savedInstanceState, TIMELINE_FRAGMENT);
+            mMentionsFragment = (BaseFragment) mFragmentManager.getFragment(savedInstanceState, MENTIONS_FRAGMENT);
+            mDmFragment = (BaseFragment) mFragmentManager.getFragment(savedInstanceState, DM_FRAGMENT);
         }
 
         if(mTimelineFragment == null) {
@@ -77,10 +85,15 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
             mDmFragment = DashboardFragment.newInstance();
         }
 
+        mTimelineFragment.setOnRefreshListener(this);
+        mMentionsFragment.setOnRefreshListener(this);
+        mDmFragment.setOnRefreshListener(this);
+
         mPager = (ViewPager) findViewById(R.id.pager);
 
         mActionBar = getSupportActionBar();
         mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        mActionBar.setDisplayHomeAsUpEnabled(true);
 
         mTabsAdapter = new TabsAdapter(this, mActionBar, mPager);
         mTabsAdapter.setOnPageChangeListener(this);
@@ -95,6 +108,19 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
 
         if(savedInstanceState != null) {
             mIsRefreshing = savedInstanceState.getBoolean(REFRESHING, false);
+        } else {
+            //Check if we need to show a default tab
+            switch(getIntent().getIntExtra(MainChoiceActivity.EXTRA.SHOW_SCREEN, -1)) {
+                case MainChoiceActivity.EXTRA.HOME_TIMELINE:
+                    mPager.setCurrentItem(0, true); //Set to home timeline tab
+                    break;
+                case MainChoiceActivity.EXTRA.MENTIONS:
+                    mPager.setCurrentItem(1, true); //Set to mentions tab
+                    break;
+                case MainChoiceActivity.EXTRA.DM:
+                    mPager.setCurrentItem(2, true); //Set to dm tab
+                    break;
+            }
         }
     }
 
@@ -119,13 +145,13 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        menu.add(0, MenuRes.REFRESH, 0, "Refresh")
-                .setIcon(R.drawable.ic_menu_refresh)
-                .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-
         menu.add(0, MenuRes.NEW_TWEET, 0, "New Tweet")
                 .setIcon(R.drawable.ic_menu_compose)
-                .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+
+        menu.add(0, MenuRes.REFRESH, 0, "Refresh")
+                .setIcon(R.drawable.ic_menu_refresh)
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 
         menu.add(0, MenuRes.SEARCH, 0, "Search")
                 .setIcon(R.drawable.ic_menu_search)
@@ -158,31 +184,14 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
+            case android.R.id.home:
+                Intent i = new Intent(this, DashboardChoiceActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
+                finish();
+                return true;
             case MenuRes.REFRESH:
-                BaseFragment f = (BaseFragment) mTabsAdapter.getCurrentItem();
-                f.setOnRefreshListener(new BaseFragment.OnRefreshListener(){
-                    @Override
-                    public void onRefreshData() {
-                        mIsRefreshing = false;
-                        invalidateOptionsMenu();
-                    }
-
-                    @Override
-                    public void onRefreshNoData() {
-                        mIsRefreshing = false;
-                        invalidateOptionsMenu();
-                    }
-
-                    @Override
-                    public void onRefreshError() {
-                        mIsRefreshing = false;
-                        invalidateOptionsMenu();
-                    }
-                });
-
-                f.startRefresh();
-                mIsRefreshing = true;
-                invalidateOptionsMenu();
+                refreshCurrentFragment();
                 return true;
 
             case MenuRes.SEARCH:
@@ -206,6 +215,35 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+
+    @Override
+    public void onRefreshData() {
+        mIsRefreshing = false;
+        invalidateOptionsMenu();
+    }
+
+    @Override
+    public void onRefreshNoData() {
+        mIsRefreshing = false;
+        invalidateOptionsMenu();
+    }
+
+    @Override
+    public void onRefreshError() {
+        mIsRefreshing = false;
+        invalidateOptionsMenu();
+    }
+
+    @Override
+    public void onStartRefresh() {
+        mIsRefreshing = true;
+        invalidateOptionsMenu();
+    }
+
+    private void refreshCurrentFragment() {
+        BaseFragment f = (BaseFragment) mTabsAdapter.getCurrentItem();
+        f.startRefresh();
     }
 
     private static class MenuRes {
