@@ -4,9 +4,11 @@ import android.app.IntentService;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import com.DGSD.TweeterTweeter.Data.Database;
 import com.DGSD.TweeterTweeter.Data.HomeTimelineProvider;
+import com.DGSD.TweeterTweeter.Data.MentionsProvider;
 import com.DGSD.TweeterTweeter.TTApplication;
 import com.DGSD.TweeterTweeter.TwitterUtils.TwitterSession;
 import twitter4j.*;
@@ -71,39 +73,34 @@ public class DownloadService extends IntentService {
                 intent.putExtra(TYPE, Data.HOME_TIMELINE);
                 sendBroadcast(intent);
                 break;
+            case Data.MENTIONS:
+                intent = new Intent(updateMentions());
+                intent.putExtra(TYPE, Data.MENTIONS);
+                sendBroadcast(intent);
+                break;
         }
     }
 
     private void fullUpdate() {
+        Intent intent = null;
+
         /* Home Timeline Update */
-        Intent intent = new Intent(updateHomeTimeline());
+        intent = new Intent(updateHomeTimeline());
         intent.putExtra(TYPE, Data.HOME_TIMELINE);
+        sendBroadcast(intent);
+
+        /* Mentions Update */
+        intent = new Intent(updateMentions());
+        intent.putExtra(TYPE, Data.MENTIONS);
         sendBroadcast(intent);
     }
 
     private String updateHomeTimeline() {
         try {
-            Paging p = new Paging(1, TTApplication.ELEMENTS_PER_PAGE);
+            ResponseList<Status> timeline = mTwitter.getHomeTimeline(getPagingSinceLast(Database.Table.HOME_TIMELINE));
 
-            long latestTweet = mDb.getLastTweetId(Database.Table.HOME_TIMELINE);
-
-            if(latestTweet > 0) {
-                p.sinceId(latestTweet);
-            }
-
-            ResponseList<Status> timeline = mTwitter.getHomeTimeline(p);
-
-            if(timeline.size() > 0) {
-                ContentResolver cr = getContentResolver();
-                for(int i = 0, size = timeline.size(); i < size; i++) {
-                    Status status = timeline.get(i);
-
-                    if(cr.insert(HomeTimelineProvider.CONTENT_URI,
-                            Database.createTimelineContentValues(null, status)) == null) {
-                        throw new Exception("Insert return URI was null");
-                    }
-                }
-
+            if(timeline != null && timeline.size() > 0) {
+                insertTimelineValues(timeline, HomeTimelineProvider.CONTENT_URI);
                 return Result.DATA;
             } else {
                 return Result.NO_DATA;
@@ -114,9 +111,64 @@ public class DownloadService extends IntentService {
         }
     }
 
+    private String updateMentions() {
+        try {
+            ResponseList<Status> mentions = mTwitter.getMentions(getPagingSinceLast(Database.Table.MENTIONS));
+
+            if(mentions != null && mentions.size() > 0) {
+                insertTimelineValues(mentions, MentionsProvider.CONTENT_URI);
+                return Result.DATA;
+            } else {
+                return Result.NO_DATA;
+            }
+        } catch(Exception e) {
+            Log.e(TAG, "Error updating home timeline", e);
+            return Result.ERROR;
+        }
+    }
+
+    /**
+     * Get the most recent id in a table
+     *
+     * @param table Table to check
+     * @return The most recent entry id in the table
+     */
+    private Paging getPagingSinceLast(String table) {
+        Paging p = new Paging(1, TTApplication.ELEMENTS_PER_PAGE);
+
+        long latestTweet = mDb.getLastTweetId(table);
+
+        if(latestTweet > 0) {
+            p.sinceId(latestTweet);
+        }
+
+        Log.e(TAG, "LAST TWEET ID : " + latestTweet);
+
+        return p;
+    }
+
+    /**
+     *
+     * @param statuses A list of statuses to insert
+     * @param provider A provider to run the query against
+     * @throws Exception when error occurs while inserting rows
+     */
+    private void insertTimelineValues(ResponseList<Status> statuses, Uri provider) throws Exception {
+        ContentResolver cr = getContentResolver();
+        for(int i = 0, size = statuses.size(); i < size; i++) {
+            Status status = statuses.get(i);
+
+            if(cr.insert(provider,
+                    Database.createTimelineContentValues(null, status)) == null) {
+                throw new Exception("Insert return URI was null");
+            }
+        }
+    }
+
     public static final class Data {
         public static final int ALL_DATA = -1;
         public static final int HOME_TIMELINE = 0;
+        public static final int MENTIONS = 1;
     }
 
     public static class Result {
