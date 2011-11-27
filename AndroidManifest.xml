@@ -27,16 +27,22 @@
             android:multiprocess="true"
             android:name="com.DGSD.TweeterTweeter.Data.MentionsProvider" />
 
+        <provider android:authorities="com.DGSD.TweeterTweeter.Data.FavouritesProvider"
+            android:multiprocess="true"
+            android:name="com.DGSD.TweeterTweeter.Data.FavouritesProvider" />
+
         <!-- Choice Activities -->
         <activity android:name=".Activity.LoginChoiceActivity" />
         <activity android:name=".Activity.DashboardChoiceActivity" />
         <activity android:name=".Activity.MainChoiceActivity" />
+        <activity android:name=".Activity.FavouritesChoiceActivity" />
 
         <!-- Phone Activities -->
         <activity android:name=".Activity.Phone.LoginActivity"/>
         <activity android:name=".Activity.Phone.MainActivity" />
         <activity android:name=".Activity.Phone.DashboardActivity" />
         <activity android:name=".Activity.Phone.NewTweetActivity" android:label="New Tweet"/>
+        <activity android:name=".Activity.Phone.FavouritesActivity" android:label="Favourites"/>
 
         <!-- Services -->
         <service android:name=".Service.DownloadService" />

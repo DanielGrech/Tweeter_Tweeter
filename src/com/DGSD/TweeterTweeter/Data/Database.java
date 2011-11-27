@@ -188,6 +188,7 @@ public class Database {
 
             db.execSQL(temp.replace(Table.TEMPLATE, Table.HOME_TIMELINE));
             db.execSQL(temp.replace(Table.TEMPLATE, Table.MENTIONS));
+            db.execSQL(temp.replace(Table.TEMPLATE, Table.FAVOURITES));
 
         }
 
@@ -204,6 +205,8 @@ public class Database {
         public static final String HOME_TIMELINE = "home_timeline";
 
         public static final String MENTIONS = "mentions";
+
+        public static final String FAVOURITES = "favourites";
     }
 
     public static class Field {

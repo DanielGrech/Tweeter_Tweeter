@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import com.DGSD.TweeterTweeter.Data.Database;
+import com.DGSD.TweeterTweeter.Data.FavouritesProvider;
 import com.DGSD.TweeterTweeter.Data.HomeTimelineProvider;
 import com.DGSD.TweeterTweeter.Data.MentionsProvider;
 import com.DGSD.TweeterTweeter.TTApplication;
@@ -78,6 +79,11 @@ public class DownloadService extends IntentService {
                 intent.putExtra(TYPE, Data.MENTIONS);
                 sendBroadcast(intent);
                 break;
+            case Data.FAVOURITES:
+                intent = new Intent(updateFavourites());
+                intent.putExtra(TYPE, Data.FAVOURITES);
+                sendBroadcast(intent);
+                break;
         }
     }
 
@@ -93,6 +99,12 @@ public class DownloadService extends IntentService {
         intent = new Intent(updateMentions());
         intent.putExtra(TYPE, Data.MENTIONS);
         sendBroadcast(intent);
+
+        /* Favourites Update */
+        intent = new Intent(updateFavourites());
+        intent.putExtra(TYPE, Data.FAVOURITES);
+        sendBroadcast(intent);
+
     }
 
     private String updateHomeTimeline() {
@@ -122,7 +134,23 @@ public class DownloadService extends IntentService {
                 return Result.NO_DATA;
             }
         } catch(Exception e) {
-            Log.e(TAG, "Error updating home timeline", e);
+            Log.e(TAG, "Error updating mentions", e);
+            return Result.ERROR;
+        }
+    }
+
+    private String updateFavourites() {
+        try {
+            ResponseList<Status> favourites = mTwitter.getFavorites(getPagingSinceLast(Database.Table.FAVOURITES));
+
+            if(favourites != null && favourites.size() > 0) {
+                insertTimelineValues(favourites, FavouritesProvider.CONTENT_URI);
+                return Result.DATA;
+            } else {
+                return Result.NO_DATA;
+            }
+        } catch(Exception e) {
+            Log.e(TAG, "Error updating favourites", e);
             return Result.ERROR;
         }
     }
@@ -141,8 +169,6 @@ public class DownloadService extends IntentService {
         if(latestTweet > 0) {
             p.sinceId(latestTweet);
         }
-
-        Log.e(TAG, "LAST TWEET ID : " + latestTweet);
 
         return p;
     }
@@ -169,6 +195,7 @@ public class DownloadService extends IntentService {
         public static final int ALL_DATA = -1;
         public static final int HOME_TIMELINE = 0;
         public static final int MENTIONS = 1;
+        public static final int FAVOURITES = 2;
     }
 
     public static class Result {
