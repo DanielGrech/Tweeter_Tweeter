@@ -38,11 +38,11 @@ public class NewTweetActivity extends FragmentActivity {
 
         if(mNewTweetFragment == null) {
             mNewTweetFragment = NewTweetFragment.newInstance();
-        }
 
-        mFragmentManager.beginTransaction()
-                        .replace(android.R.id.content, mNewTweetFragment)
-                        .commit();
+            mFragmentManager.beginTransaction()
+                    .replace(android.R.id.content, mNewTweetFragment)
+                    .commit();
+        }
 
         mActionBar = getSupportActionBar();
         mActionBar.setDisplayHomeAsUpEnabled(true);

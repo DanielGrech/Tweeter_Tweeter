@@ -5,9 +5,11 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Point;
 import android.os.Build;
+import android.os.Environment;
 import android.view.Display;
 import android.view.WindowManager;
 
+import java.io.File;
 import java.util.AbstractCollection;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -74,4 +76,15 @@ public class Utils {
         Display d = ((WindowManager) c.getSystemService(Activity.WINDOW_SERVICE)).getDefaultDisplay();
         return d.getWidth() > d.getHeight();
     }
+
+    public static File getTempFile(Context context){
+		//it will return /sdcard/image.tmp
+		final File path = new File( Environment.getExternalStorageDirectory(),
+				context.getPackageName() );
+
+		if(!path.exists()) {
+			path.mkdir();
+		}
+		return new File(path, "image.tmp");
+	}
 }
