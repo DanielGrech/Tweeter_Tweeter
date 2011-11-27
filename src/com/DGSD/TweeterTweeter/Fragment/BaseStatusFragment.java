@@ -13,10 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import com.DGSD.TweeterTweeter.Data.Database;
 import com.DGSD.TweeterTweeter.R;
 import com.DGSD.TweeterTweeter.UI.PopupItem;
@@ -30,9 +27,12 @@ import com.github.droidfu.widgets.WebImageView;
  * Description :
  */
 public abstract class BaseStatusFragment extends BaseFragment implements LoaderManager.LoaderCallbacks<Cursor>,
-        SimpleCursorAdapter.ViewBinder, AdapterView.OnItemLongClickListener
+        SimpleCursorAdapter.ViewBinder, AdapterView.OnItemLongClickListener, AbsListView.OnScrollListener
 {
     protected static final String TAG = BaseStatusFragment.class.getSimpleName();
+
+    /* Toggle to indicate whether our list is currently scrolling or not */
+    private boolean mBusy;
 
     protected ListView mListView;
 
@@ -89,6 +89,7 @@ public abstract class BaseStatusFragment extends BaseFragment implements LoaderM
 
         mListView = (ListView) v.findViewById(R.id.list);
         mListView.setOnItemLongClickListener(this);
+        mListView.setOnScrollListener(this);
         mListView.setLayoutAnimation(AnimationUtils.loadLayoutAnimation(mActivity, R.anim.layout_animation));
 
         return v;
@@ -134,11 +135,14 @@ public abstract class BaseStatusFragment extends BaseFragment implements LoaderM
 
             return true;
         } else if(col == CursorCols.img) {
-            //If this is a retweet, show the original tweeters img, else show the regular img
-            WebImageView img = (WebImageView) view;
-            img.setImageUrl(cursor.getString(CursorCols.orig_tweeter_img).length() > 0 ?
-                    cursor.getString(CursorCols.orig_tweeter_img) : cursor.getString(CursorCols.img));
-            img.loadImage();
+            //Only load the image if we are not currently flinging the listview
+            if(!mBusy) {
+                //If this is a retweet, show the original tweeters img, else show the regular img
+                WebImageView img = (WebImageView) view;
+                img.setImageUrl(cursor.getString(CursorCols.orig_tweeter_img).length() > 0 ?
+                        cursor.getString(CursorCols.orig_tweeter_img) : cursor.getString(CursorCols.img));
+                img.loadImage();
+            }
 
             //Set the tag of this row
             ViewGroup parent = (ViewGroup) view.getParent();
@@ -238,6 +242,16 @@ public abstract class BaseStatusFragment extends BaseFragment implements LoaderM
         // above is about to be closed.  We need to make sure we are no
         // longer using it.
         mAdapter.swapCursor(null);
+    }
+
+    @Override
+    public void onScrollStateChanged(AbsListView absListView, int scrollState) {
+        mBusy = (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_FLING);
+    }
+
+    @Override
+    public void onScroll(AbsListView absListView, int i, int i1, int i2) {
+
     }
 
     @Override
