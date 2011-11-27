@@ -26,8 +26,6 @@ public class DashboardActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_dashboard);
 
-        DashboardFragment f = DashboardFragment.newInstance();
-
         mFragmentManager = getSupportFragmentManager();
 
         if(savedInstanceState != null) {
@@ -36,11 +34,11 @@ public class DashboardActivity extends FragmentActivity {
 
         if(mDashboardFragment == null) {
             mDashboardFragment = DashboardFragment.newInstance();
-        }
 
-        getSupportFragmentManager().beginTransaction()
-                                   .replace(android.R.id.content, f)
+            getSupportFragmentManager().beginTransaction()
+                                   .replace(android.R.id.content, mDashboardFragment)
                                    .commit();
+        }
     }
 
     @Override

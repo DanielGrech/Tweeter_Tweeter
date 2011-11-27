@@ -7,6 +7,7 @@ import android.support.v4.view.MenuItem;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.DGSD.TweeterTweeter.Activity.FavouritesChoiceActivity;
 import com.DGSD.TweeterTweeter.Activity.MainChoiceActivity;
 import com.DGSD.TweeterTweeter.R;
 
@@ -73,7 +74,8 @@ public class DashboardFragment extends BaseFragment implements View.OnClickListe
             }
 
             case R.id.btn_dashboard_favourites: {
-
+                Intent i = new Intent(mActivity, FavouritesChoiceActivity.class);
+                startActivity(i);
                 break;
             }
 
