@@ -27,7 +27,7 @@ import com.DGSD.TweeterTweeter.UI.TabsAdapter;
  *        - Dashboard view
  *
  */
-public class MainActivity extends FragmentActivity implements ViewPager.OnPageChangeListener, BaseFragment.OnRefreshListener {
+public class MainActivity extends FragmentActivity implements  BaseFragment.OnRefreshListener {
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private ViewPager mPager;
@@ -94,7 +94,6 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
         mActionBar.setDisplayHomeAsUpEnabled(true);
 
         mTabsAdapter = new TabsAdapter(this, mActionBar, mPager);
-        mTabsAdapter.setOnPageChangeListener(this);
 
         mTabsAdapter.addTab(mActionBar.newTab().setText("Timeline"), mTimelineFragment);
         mTabsAdapter.addTab(mActionBar.newTab().setText("Mentions"), mMentionsFragment);
@@ -206,21 +205,6 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
                 return super.onOptionsItemSelected(item);
             }
         }
-    }
-
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
-
     }
 
     @Override
