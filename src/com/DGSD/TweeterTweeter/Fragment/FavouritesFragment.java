@@ -19,8 +19,7 @@ import com.DGSD.TweeterTweeter.Service.DownloadService;
  * Date: 22/11/11 2:47 PM
  * Description :
  */
-public class FavouritesFragment extends BaseStatusFragment implements LoaderManager.LoaderCallbacks<Cursor>,
-        SimpleCursorAdapter.ViewBinder, AdapterView.OnItemLongClickListener {
+public class FavouritesFragment extends BaseStatusFragment {
     private static final String TAG = FavouritesFragment.class.getSimpleName();
 
     public static FavouritesFragment newInstance() {
