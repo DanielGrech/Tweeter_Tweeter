@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Bitly">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libs/bitlyj-2.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

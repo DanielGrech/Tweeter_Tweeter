@@ -1,6 +1,7 @@
 package com.DGSD.TweeterTweeter.Fragment;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.app.SupportActivity;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.view.Menu;
@@ -17,6 +19,7 @@ import android.support.v4.view.MenuItem;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.View;
@@ -25,19 +28,22 @@ import android.widget.FilterQueryProvider;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 import com.DGSD.TweeterTweeter.Data.Database;
-import com.DGSD.TweeterTweeter.Data.FollowersProvider;
 import com.DGSD.TweeterTweeter.Data.FollowingProvider;
 import com.DGSD.TweeterTweeter.R;
 import com.DGSD.TweeterTweeter.Utils.MentionsTokenizer;
+import com.DGSD.TweeterTweeter.Utils.UrlShortenTask;
 import com.DGSD.TweeterTweeter.Utils.Utils;
 import com.github.droidfu.widgets.WebImageView;
+
+import java.util.Vector;
 
 /**
  * Author: Daniel Grech
  * Date: 26/11/11 6:03 PM
  * Description :
  */
-public class NewTweetFragment extends DialogFragment  implements LoaderManager.LoaderCallbacks<Cursor>, SimpleCursorAdapter.ViewBinder {
+public class NewTweetFragment extends DialogFragment  implements LoaderManager.LoaderCallbacks<Cursor>, SimpleCursorAdapter.ViewBinder,
+        UrlShortenTask.OnShortenUrlListener {
     private static final String TAG = NewTweetFragment.class.getSimpleName();
 
     protected static final String[] FROM = { Database.Field.SCREEN_NAME, Database.Field.IMG };
@@ -72,6 +78,12 @@ public class NewTweetFragment extends DialogFragment  implements LoaderManager.L
 
     private String mCurrentFilter;
 
+    private ProgressDialog mProgressDialog;
+
+    private boolean mProgressBarShowing = false;
+
+    private UrlShortenTask mUrlShortenerTask;
+
     public static NewTweetFragment newInstance() {
         final NewTweetFragment f = new NewTweetFragment();
 
@@ -81,7 +93,7 @@ public class NewTweetFragment extends DialogFragment  implements LoaderManager.L
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setRetainInstance(true);
         setHasOptionsMenu(true);
     }
 
@@ -104,7 +116,7 @@ public class NewTweetFragment extends DialogFragment  implements LoaderManager.L
         super.onActivityCreated(savedInstanceState);
 
         mCharacterCount = new TextView(getActivity());
-        mCharacterCount.setText("140");
+        mCharacterCount.setText( String.valueOf(MAX_TWEET_SIZE) );
 
         if(savedInstanceState != null) {
             addToTweet(mTweetText, savedInstanceState.getString(TWEET_TEXT, ""));
@@ -114,10 +126,13 @@ public class NewTweetFragment extends DialogFragment  implements LoaderManager.L
             }
         }
 
-        setupMentionCompletion();
+        if(mProgressBarShowing) {
+            mProgressDialog = ProgressDialog.show(getActivity(), "", "Shortening urls", true);
+        }
 
-        // Prepare the loader.  Either re-connect with an existing one, or start a new one.
-        getLoaderManager().initLoader(0, null, this);
+        if(mUrlShortenerTask != null) {
+            mUrlShortenerTask.setOnShortenUrlListener(this);
+        }
     }
 
     @Override
@@ -125,6 +140,11 @@ public class NewTweetFragment extends DialogFragment  implements LoaderManager.L
         super.onResume();
 
         setupCharacterCounter();
+
+        setupMentionCompletion();
+
+        // Prepare the loader.  Either re-connect with an existing one, or start a new one.
+        getLoaderManager().initLoader(0, null, this);
 
         getActivity().invalidateOptionsMenu();
     }
@@ -135,6 +155,25 @@ public class NewTweetFragment extends DialogFragment  implements LoaderManager.L
 
         if(mTweetText != null) {
             outState.putString(TWEET_TEXT, mTweetText.getText().toString());
+        }
+
+        if(mProgressDialog != null) {
+            mProgressBarShowing = mProgressDialog.isShowing();
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+        Log.v(TAG, "onDetach()");
+
+        if(mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.dismiss();
+        }
+
+        if(mUrlShortenerTask != null) {
+            mUrlShortenerTask.setOnShortenUrlListener(null);
         }
     }
 
@@ -178,6 +217,10 @@ public class NewTweetFragment extends DialogFragment  implements LoaderManager.L
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
+            case MenuRes.SHORTEN_URL:
+                mUrlShortenerTask = new UrlShortenTask(getActivity(), this);
+                mUrlShortenerTask.execute();
+                return true;
             case MenuRes.IMG:
                 final CharSequence[] choices = {"Camera Picture", "Gallery image"};
 
@@ -268,8 +311,8 @@ public class NewTweetFragment extends DialogFragment  implements LoaderManager.L
             @Override
             public CharSequence convertToString(Cursor cursor) {
                 return new StringBuilder().append('@')
-                                          .append(cursor.getString(cursor.getColumnIndex(Database.Field.SCREEN_NAME)))
-                                          .toString();
+                        .append(cursor.getString(cursor.getColumnIndex(Database.Field.SCREEN_NAME)))
+                        .toString();
             }
         });
 
@@ -279,12 +322,16 @@ public class NewTweetFragment extends DialogFragment  implements LoaderManager.L
             @Override
             public Cursor runQuery(CharSequence constraint) {
                 if(constraint != null) {
+                    if(constraint.toString().startsWith("@")) {
+                        return null;
+                    }
+
                     mCurrentFilter = new StringBuilder().append("\"@\" ||")
-                                                        .append(Database.Ordering.SCREEN_NAME)
-                                                        .append(" LIKE \"")
-                                                        .append(constraint)
-                                                        .append("%\"")
-                                                        .toString();
+                            .append(Database.Ordering.SCREEN_NAME)
+                            .append(" LIKE \"")
+                            .append(constraint)
+                            .append("%\"")
+                            .toString();
                     getLoaderManager().restartLoader(0, null, NewTweetFragment.this);
                     mCurrentFilter = null;
                 }
@@ -341,6 +388,36 @@ public class NewTweetFragment extends DialogFragment  implements LoaderManager.L
         }
 
         return false;
+    }
+
+    @Override
+    public void onStartUrlShorten() {
+        mProgressDialog = ProgressDialog.show(getActivity(), "", "Shortening urls", true);
+    }
+
+    @Override
+    public void onFinishUrlShorten(Vector<UrlShortenTask.Hyperlink> links) {
+        String text = mTweetText.getText().toString();
+        for(UrlShortenTask.Hyperlink link : links) {
+            if(link.newUrl == null) {
+                continue;
+            }
+
+            Log.i(TAG, "Got link: " + link.foundUrl + " " + link.newUrl);
+
+            text = text.replace(link.foundUrl, link.newUrl);
+        }
+
+        mTweetText.setText("");
+
+        mTweetText.append(text);
+
+        mProgressDialog.dismiss();
+    }
+
+    @Override
+    public String onGetText() {
+        return mTweetText == null ? null : mTweetText.getText().toString();
     }
 
     private class TweetLengthWatcher implements TextWatcher {

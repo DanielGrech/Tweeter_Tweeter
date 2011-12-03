@@ -6,6 +6,8 @@ import android.support.v4.app.ActionBar;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItem;
+import android.support.v4.view.Window;
+import android.view.WindowManager;
 import com.DGSD.TweeterTweeter.Activity.DashboardChoiceActivity;
 import com.DGSD.TweeterTweeter.Fragment.NewTweetFragment;
 import com.DGSD.TweeterTweeter.R;
@@ -30,6 +32,8 @@ public class NewTweetActivity extends FragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+
         mFragmentManager = getSupportFragmentManager();
 
         if(savedInstanceState != null) {
@@ -46,6 +50,9 @@ public class NewTweetActivity extends FragmentActivity {
 
         mActionBar = getSupportActionBar();
         mActionBar.setDisplayHomeAsUpEnabled(true);
+
+        //Make sure the progressbar is hidden at first.
+        setProgressBarIndeterminateVisibility(false);
     }
 
     @Override

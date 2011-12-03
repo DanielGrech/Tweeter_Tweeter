@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Config;
 import android.util.Log;
 import com.DGSD.TweeterTweeter.TwitterUtils.TwitterSession;
+import com.github.droidfu.DroidFuApplication;
 import twitter4j.Twitter;
 import twitter4j.conf.Configuration;
 import twitter4j.conf.ConfigurationBuilder;
@@ -16,7 +17,7 @@ import twitter4j.conf.ConfigurationBuilder;
  * Date: 21/11/11 3:30 PM
  * Description :
  */
-public class TTApplication extends Application {
+public class TTApplication extends DroidFuApplication {
     private static final String TAG = TTApplication.class.getSimpleName();
 
     public static String CONSUMER_KEY;

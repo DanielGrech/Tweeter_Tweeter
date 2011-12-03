@@ -33,6 +33,7 @@
     <orderEntry type="module" module-name="ActionbarSherlock" exported="" />
     <orderEntry type="library" exported="" name="Twitter4J Dependencies" level="project" />
     <orderEntry type="library" exported="" name="Droid-fu" level="project" />
+    <orderEntry type="library" exported="" name="Bitly" level="project" />
   </component>
 </module>
 
