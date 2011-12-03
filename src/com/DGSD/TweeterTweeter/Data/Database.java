@@ -124,6 +124,36 @@ public class Database {
         return values;
     }
 
+    public static synchronized ContentValues createUserContentValues(String user, User u) {
+		ContentValues values = new ContentValues();
+
+		values.put(Field.USER, user);
+		values.put(Field.ID, Long.toString(u.getId()) );
+		values.put(Field.CREATED_AT, Long.toString(u.getCreatedAt().getTime()) );
+		values.put(Field.NAME, u.getName() );
+		values.put(Field.SCREEN_NAME, u.getScreenName() );
+		values.put(Field.DESC, u.getDescription() );
+		values.put(Field.FAV, u.getFavouritesCount() );
+		values.put(Field.FOLLOWERS, u.getFollowersCount() );
+		values.put(Field.FRIENDS, u.getFriendsCount() );
+		values.put(Field.NUM_STAT, u.getStatusesCount() );
+
+		try{
+			values.put(Field.TEXT, u.getStatus().getText() );
+		}catch(NullPointerException e) {
+			Log.w(TAG, "Null pointer getting tweet text");
+			values.put(Field.TEXT, "" );
+		}
+		try{
+			values.put(Field.IMG, u.getProfileImageURL().toString().replace("_normal.", "_bigger.") );
+		}catch(NullPointerException e) {
+			Log.w(TAG, "Null pointer getting profile image", e);
+			values.put(Field.TEXT, "" );
+		}
+
+		return values;
+	}
+
     /**
      *
      * @return Timestamp of the latest status we have it the database
@@ -190,11 +220,33 @@ public class Database {
             db.execSQL(temp.replace(Table.TEMPLATE, Table.MENTIONS));
             db.execSQL(temp.replace(Table.TEMPLATE, Table.FAVOURITES));
 
+            /* User Based Tables */
+            temp = "create table " + Table.TEMPLATE + " (" +
+					Field.NAME + " text, " +
+					Field.ID + " text primary key, " +
+					Field.USER + " text, " +
+					Field.SCREEN_NAME + " text, " +
+					Field.CREATED_AT + " text, " +
+					Field.DESC + " text, " +
+					Field.FAV + " int, " +
+					Field.FOLLOWERS + " int, " +
+					Field.FRIENDS + " int, " +
+					Field.NUM_STAT + " int, " +
+					Field.TEXT + " text, " +
+					Field.IMG + " text)";
+
+            db.execSQL(temp.replace(Table.TEMPLATE, Table.FOLLOWERS));
+            db.execSQL(temp.replace(Table.TEMPLATE, Table.FOLLOWING));
+
         }
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             db.execSQL("drop table " + Table.HOME_TIMELINE);
+            db.execSQL("drop table " + Table.MENTIONS);
+            db.execSQL("drop table " + Table.FAVOURITES);
+            db.execSQL("drop table " + Table.FOLLOWING);
+            db.execSQL("drop table " + Table.FOLLOWERS);
             this.onCreate(db);
         }
     }
@@ -207,6 +259,10 @@ public class Database {
         public static final String MENTIONS = "mentions";
 
         public static final String FAVOURITES = "favourites";
+
+        public static final String FOLLOWING = "following";
+
+        public static final String FOLLOWERS = "followers";
     }
 
     public static class Field {
@@ -245,6 +301,8 @@ public class Database {
         public static final String DESC = " DESC";
 
         public static final String DATE = Field.CREATED_AT;
+
+        public static final String SCREEN_NAME = Field.SCREEN_NAME;
 
         public static final String ID = Field.ID;
     }

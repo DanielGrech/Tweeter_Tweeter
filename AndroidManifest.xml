@@ -31,11 +31,20 @@
             android:multiprocess="true"
             android:name="com.DGSD.TweeterTweeter.Data.FavouritesProvider" />
 
+        <provider android:authorities="com.DGSD.TweeterTweeter.Data.FollowersProvider"
+            android:multiprocess="true"
+            android:name="com.DGSD.TweeterTweeter.Data.FollowersProvider" />
+
+        <provider android:authorities="com.DGSD.TweeterTweeter.Data.FollowingProvider"
+            android:multiprocess="true"
+            android:name="com.DGSD.TweeterTweeter.Data.FollowingProvider" />
+
         <!-- Choice Activities -->
         <activity android:name=".Activity.LoginChoiceActivity" />
         <activity android:name=".Activity.DashboardChoiceActivity" />
         <activity android:name=".Activity.MainChoiceActivity" />
         <activity android:name=".Activity.FavouritesChoiceActivity" />
+        <activity android:name=".Activity.PeopleChoiceActivity" />
 
         <!-- Phone Activities -->
         <activity android:name=".Activity.Phone.LoginActivity"/>
@@ -43,6 +52,7 @@
         <activity android:name=".Activity.Phone.DashboardActivity" />
         <activity android:name=".Activity.Phone.NewTweetActivity" android:label="New Tweet"/>
         <activity android:name=".Activity.Phone.FavouritesActivity" android:label="Favourites"/>
+        <activity android:name=".Activity.Phone.PeopleActivity" android:label="People"/>
 
         <!-- Services -->
         <service android:name=".Service.DownloadService" />

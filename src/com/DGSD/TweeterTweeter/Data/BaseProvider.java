@@ -27,7 +27,7 @@ public abstract class BaseProvider extends ContentProvider {
 
     protected static final UriMatcher mURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
-    private Database mDatabase;
+    protected Database mDatabase;
 
     public abstract String getTable();
 

@@ -7,8 +7,11 @@ import android.support.v4.view.MenuItem;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.DGSD.TweeterTweeter.Activity.DashboardChoiceActivity;
 import com.DGSD.TweeterTweeter.Activity.FavouritesChoiceActivity;
 import com.DGSD.TweeterTweeter.Activity.MainChoiceActivity;
+import com.DGSD.TweeterTweeter.Activity.PeopleChoiceActivity;
+import com.DGSD.TweeterTweeter.Activity.Phone.NewTweetActivity;
 import com.DGSD.TweeterTweeter.R;
 
 /**
@@ -80,7 +83,8 @@ public class DashboardFragment extends BaseFragment implements View.OnClickListe
             }
 
             case R.id.btn_dashboard_following: {
-
+                Intent i = new Intent(mActivity, PeopleChoiceActivity.class);
+                startActivity(i);
                 break;
             }
 
@@ -104,5 +108,39 @@ public class DashboardFragment extends BaseFragment implements View.OnClickListe
         menu.add("Search")
                 .setIcon(R.drawable.ic_menu_search)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case MenuRes.ABOUT: {
+
+                return true;
+            }
+
+            case MenuRes.NEW_TWEET: {
+                Intent i = new Intent(getActivity(), NewTweetActivity.class);
+                startActivity(i);
+                return true;
+            }
+
+            case MenuRes.SEARCH: {
+
+                return true;
+            }
+
+            default: {
+                return super.onOptionsItemSelected(item);
+            }
+        }
+    }
+
+    private static class MenuRes {
+        public static final int NEW_TWEET = 0;
+
+        public static final int SEARCH = 1;
+
+        public static final int ABOUT = 3;
+
     }
 }

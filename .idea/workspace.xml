@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_LOG_LEVEL" value="ERROR" />
-  </component>
   <component name="ChangeListManager">
     <list default="true" id="3c85e51a-6067-47e8-a25f-ef91a732648b" name="Default" comment="" />
     <ignored path="TweeterTweeter.iws" />
@@ -62,71 +59,46 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="MainActivity.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Activity/Phone/MainActivity.java">
+      <file leaf-file-name="BasePeopleFragment.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Fragment/BasePeopleFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="247" column="27" selection-start="7647" selection-end="7729" vertical-scroll-proportion="-23.615385">
+            <state line="83" column="165" selection-start="3146" selection-end="3146" vertical-scroll-proportion="-14.230769">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="NewTweetActivity.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Activity/Phone/NewTweetActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="41" column="72" selection-start="1328" selection-end="1328" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="fragment_new_tweet.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/res/layout/fragment_new_tweet.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="23" selection-start="228" selection-end="228" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="NewTweetFragment.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Fragment/NewTweetFragment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="153" column="24" selection-start="4839" selection-end="4839" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="method#setupCharacterCounter#0;class#NewTweetFragment#0" expanded="false" />
-                <element signature="method#addToTweet#0;class#NewTweetFragment#0" expanded="false" />
-                <element signature="class#TweetLengthWatcher#0;class#NewTweetFragment#0" expanded="false" />
-                <element signature="class#MenuRes#0;class#NewTweetFragment#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BaseStatusFragment.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="BaseStatusFragment.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Fragment/BaseStatusFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="137" column="79" selection-start="5562" selection-end="5562" vertical-scroll-proportion="0.37444934">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Utils.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Utils/Utils.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="79" column="10" selection-start="2385" selection-end="2385" vertical-scroll-proportion="0.0">
+            <state line="259" column="24" selection-start="10685" selection-end="10685" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AndroidManifest.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
+      <file leaf-file-name="StatusDataHolder.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/UI/StatusDataHolder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="44" column="66" selection-start="2107" selection-end="2107" vertical-scroll-proportion="0.0">
+            <state line="16" column="37" selection-start="434" selection-end="434" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PeopleDataHolder.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/UI/PeopleDataHolder.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="14" column="4" selection-start="354" selection-end="410" vertical-scroll-proportion="0.30837005">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FollowingFragment.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Fragment/FollowingFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="29" column="101" selection-start="942" selection-end="942" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -135,9 +107,31 @@
       <file leaf-file-name="Database.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Data/Database.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="190" column="68" selection-start="7074" selection-end="7074" vertical-scroll-proportion="0.0">
+            <state line="15" column="13" selection-start="371" selection-end="371" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="method#createTimelineContentValues#0;class#Database#0" expanded="false" />
+                <element signature="method#getLastTweetId#0;class#Database#0" expanded="false" />
+                <element signature="class#Field#0;class#Database#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BaseProvider.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Data/BaseProvider.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="29" column="13" selection-start="925" selection-end="925" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PeopleActivity.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Activity/Phone/PeopleActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="26" column="34" selection-start="1051" selection-end="1051" vertical-scroll-proportion="-6.3461537">
+              <folding>
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -158,21 +152,21 @@
     <option name="changedFiles">
       <list>
         <option value="$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Fragment/MentionsFragment.java" />
-        <option value="$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Activity/FavouritesChoiceActivity.java" />
-        <option value="$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Data/FavouritesProvider.java" />
         <option value="$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Data/Database.java" />
-        <option value="$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Fragment/FavouritesFragment.java" />
+        <option value="$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Activity/PeopleChoiceActivity.java" />
+        <option value="$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Activity/Phone/MainActivity.java" />
         <option value="$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Fragment/DashboardFragment.java" />
         <option value="$PROJECT_DIR$/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Activity/Phone/PeopleActivity.java" />
+        <option value="$PROJECT_DIR$/res/layout/list_item_people.xml" />
+        <option value="$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Fragment/FollowersFragment.java" />
+        <option value="$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Fragment/FollowingFragment.java" />
         <option value="$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Service/DownloadService.java" />
-        <option value="$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Activity/Phone/MainActivity.java" />
-        <option value="$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Activity/Phone/DashboardActivity.java" />
-        <option value="$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Activity/Phone/FavouritesActivity.java" />
-        <option value="$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Activity/Phone/NewTweetActivity.java" />
-        <option value="$PROJECT_DIR$/res/layout/fragment_new_tweet.xml" />
-        <option value="$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Utils/Utils.java" />
-        <option value="$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Fragment/NewTweetFragment.java" />
+        <option value="$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/UI/PeopleDataHolder.java" />
+        <option value="$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/UI/StatusDataHolder.java" />
         <option value="$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Fragment/BaseStatusFragment.java" />
+        <option value="$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Fragment/BasePeopleFragment.java" />
+        <option value="$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Fragment/FavouritesFragment.java" />
       </list>
     </option>
   </component>
@@ -206,6 +200,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -421,10 +416,6 @@
               <option name="myItemId" value="res" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="values-land" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -457,22 +448,8 @@
               <option name="myItemId" value="res" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-          </PATH>
-          <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="TweeterTweeter" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="TweeterTweeter" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="drawable" />
+              <option name="myItemId" value="layout" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -480,49 +457,12 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="TweeterTweeter" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ActionBarSherlock" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="TweeterTweeter" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ActionBarSherlock" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="TweeterTweeter" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ActionBarSherlock" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="values" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="Favorites" />
-      <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -545,11 +485,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.DGSD.TweeterTweeter.Data" />
-      <recent name="com.DGSD.TweeterTweeter.Fragment" />
       <recent name="com.DGSD.TweeterTweeter.Activity.Phone" />
       <recent name="com.DGSD.TweeterTweeter.Activity" />
+      <recent name="com.DGSD.TweeterTweeter.Fragment" />
       <recent name="com.DGSD.TweeterTweeter.UI" />
+      <recent name="com.DGSD.TweeterTweeter.Data" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/res/layout" />
@@ -822,124 +762,125 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Data/FavouritesProvider.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="40" selection-start="767" selection-end="767" vertical-scroll-proportion="0.56732225">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Service/DownloadService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="108" column="0" selection-start="3147" selection-end="3147" vertical-scroll-proportion="2.1785173">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Fragment/BaseFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="39" selection-start="1592" selection-end="1608" vertical-scroll-proportion="-20.192308">
+        <state line="18" column="22" selection-start="587" selection-end="587" vertical-scroll-proportion="0.19823788">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Fragment/DashboardFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="76" column="73" selection-start="2738" selection-end="2738" vertical-scroll-proportion="0.16299559">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="66" selection-start="2107" selection-end="2107" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Activity/Phone/DashboardActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="39" column="45" selection-start="1381" selection-end="1381" vertical-scroll-proportion="0.6696035">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Activity/Phone/FavouritesActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="53" column="26" selection-start="1900" selection-end="1900" vertical-scroll-proportion="0.55947137">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Data/Database.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="190" column="68" selection-start="7074" selection-end="7074" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="method#createTimelineContentValues#0;class#Database#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Fragment/FavouritesFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="43" column="31" selection-start="1530" selection-end="1546" vertical-scroll-proportion="0.670229">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Activity/Phone/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="247" column="27" selection-start="7647" selection-end="7729" vertical-scroll-proportion="-23.615385">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/drawable/ic_dashboard_trends.xml">
+    <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/fragment_new_tweet.xml">
+    <entry file="file://$PROJECT_DIR$/res/values/styles.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="23" selection-start="228" selection-end="228" vertical-scroll-proportion="0.0">
+        <state line="15" column="42" selection-start="670" selection-end="709" vertical-scroll-proportion="0.34039333">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Activity/Phone/NewTweetActivity.java">
+    <entry file="file://$PROJECT_DIR$/res/layout/list_item_people.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="72" selection-start="1328" selection-end="1328" vertical-scroll-proportion="0.0">
+        <state line="10" column="93" selection-start="442" selection-end="442" vertical-scroll-proportion="0.22692889">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Utils/Utils.java">
+    <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Fragment/FollowersFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="79" column="10" selection-start="2385" selection-end="2385" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Fragment/NewTweetFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="153" column="24" selection-start="4839" selection-end="4839" vertical-scroll-proportion="0.0">
+        <state line="29" column="86" selection-start="951" selection-end="951" vertical-scroll-proportion="0.3419062">
           <folding>
-            <element signature="method#setupCharacterCounter#0;class#NewTweetFragment#0" expanded="false" />
-            <element signature="method#addToTweet#0;class#NewTweetFragment#0" expanded="false" />
-            <element signature="class#TweetLengthWatcher#0;class#NewTweetFragment#0" expanded="false" />
-            <element signature="class#MenuRes#0;class#NewTweetFragment#0" expanded="false" />
+            <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Service/DownloadService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="324" column="22" selection-start="10166" selection-end="10166" vertical-scroll-proportion="0.44660193">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Data/BaseProvider.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="13" selection-start="925" selection-end="925" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Data/FollowersProvider.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="13" selection-start="430" selection-end="430" vertical-scroll-proportion="0.19902913">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Data/Database.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="13" selection-start="371" selection-end="371" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="method#createTimelineContentValues#0;class#Database#0" expanded="false" />
+            <element signature="method#getLastTweetId#0;class#Database#0" expanded="false" />
+            <element signature="class#Field#0;class#Database#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Activity/Phone/PeopleActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="34" selection-start="1051" selection-end="1051" vertical-scroll-proportion="-6.3461537">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Fragment/FollowingFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="101" selection-start="942" selection-end="942" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/UI/StatusDataHolder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="37" selection-start="434" selection-end="434" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Fragment/BaseStatusFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="137" column="79" selection-start="5562" selection-end="5562" vertical-scroll-proportion="0.37444934">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state line="259" column="24" selection-start="10685" selection-end="10685" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Fragment/BasePeopleFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="83" column="165" selection-start="3146" selection-end="3146" vertical-scroll-proportion="-14.230769">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/Fragment/FavouritesFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="32" column="77" selection-start="1067" selection-end="1067" vertical-scroll-proportion="0.45385778">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/DGSD/TweeterTweeter/UI/PeopleDataHolder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="4" selection-start="354" selection-end="410" vertical-scroll-proportion="0.30837005">
+          <folding />
         </state>
       </provider>
     </entry>
