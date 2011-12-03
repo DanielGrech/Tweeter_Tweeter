@@ -16,6 +16,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.*;
 import com.DGSD.TweeterTweeter.Data.Database;
 import com.DGSD.TweeterTweeter.R;
+import com.DGSD.TweeterTweeter.UI.PeopleDataHolder;
 import com.DGSD.TweeterTweeter.UI.PopupItem;
 import com.DGSD.TweeterTweeter.UI.QuickPopup;
 import com.DGSD.TweeterTweeter.UI.StatusDataHolder;
@@ -136,12 +137,14 @@ public abstract class BaseStatusFragment extends BaseFragment implements LoaderM
             return true;
         } else if(col == CursorCols.img) {
             //Only load the image if we are not currently flinging the listview
+            WebImageView img = (WebImageView) view;
             if(!mBusy) {
                 //If this is a retweet, show the original tweeters img, else show the regular img
-                WebImageView img = (WebImageView) view;
                 img.setImageUrl(cursor.getString(CursorCols.orig_tweeter_img).length() > 0 ?
                         cursor.getString(CursorCols.orig_tweeter_img) : cursor.getString(CursorCols.img));
                 img.loadImage();
+            }  else {
+                img.reset();
             }
 
             //Set the tag of this row
@@ -151,13 +154,16 @@ public abstract class BaseStatusFragment extends BaseFragment implements LoaderM
             if(parent.getTag() == null) {
                 holder = new StatusDataHolder(cursor.getLong(CursorCols.id),
                         cursor.getString(CursorCols.screen_name),
-                        cursor.getString(CursorCols.text));
+                        cursor.getString(CursorCols.text),
+                        cursor.getString(CursorCols.img),
+                        img);
             } else {
                 holder = (StatusDataHolder) parent.getTag();
                 holder.id = cursor.getLong(CursorCols.id);
                 holder.user = cursor.getString(CursorCols.orig_tweeter).length() > 0 ?
                         cursor.getString(CursorCols.orig_tweeter) : cursor.getString(CursorCols.screen_name);
                 holder.text = cursor.getString(CursorCols.text);
+                holder.img = cursor.getString(CursorCols.img);
             }
 
             parent.setTag(holder);
@@ -245,8 +251,22 @@ public abstract class BaseStatusFragment extends BaseFragment implements LoaderM
     }
 
     @Override
-    public void onScrollStateChanged(AbsListView absListView, int scrollState) {
+    public void onScrollStateChanged(AbsListView listview, int scrollState) {
         mBusy = (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_FLING);
+
+        if(scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
+            int first = listview.getFirstVisiblePosition();
+            int count = listview.getChildCount();
+            for (int i=0; i<count; i++) {
+                if(listview.getChildAt(i) != null) {
+                    StatusDataHolder holder = (StatusDataHolder) listview.getChildAt(i).getTag();
+                    if(holder != null) {
+                        holder.webimageview.setImageUrl(holder.img);
+                        holder.webimageview.loadImage();
+                    }
+                }
+            }
+        }
     }
 
     @Override

@@ -1,5 +1,7 @@
 package com.DGSD.TweeterTweeter.UI;
 
+import com.github.droidfu.widgets.WebImageView;
+
 /**
  * Author: Daniel Grech
  * Date: 25/11/11 11:49 AM
@@ -11,10 +13,14 @@ public class StatusDataHolder {
     public long id;
     public String user;
     public String text;
+    public String img;
+    public WebImageView webimageview;
 
-    public StatusDataHolder(long i, String u, String t) {
+    public StatusDataHolder(long i, String u, String t, String im, WebImageView wiv) {
         id = i;
         user = u;
         text = t;
+        img = im;
+        webimageview = wiv;
     }
 }
