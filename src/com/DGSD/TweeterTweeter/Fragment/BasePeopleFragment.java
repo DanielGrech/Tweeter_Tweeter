@@ -60,15 +60,6 @@ public abstract class BasePeopleFragment extends BaseFragment implements LoaderM
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //Set up popup action items
-        Resources res = getResources();
-        mQuickPopup.addPopupItem(new PopupItem(PopupItemId.RETWEET, "Retweet", res.getDrawable(R.drawable.ic_popup_retweet)));
-        mQuickPopup.addPopupItem(new PopupItem(PopupItemId.REPLY, "Reply", res.getDrawable(R.drawable.ic_popup_reply)));
-        mQuickPopup.addPopupItem(new PopupItem(PopupItemId.FAVOURITE, "Favourite", res.getDrawable(R.drawable.ic_popup_favourite)));
-        mQuickPopup.addPopupItem(new PopupItem(PopupItemId.SHARE, "Share", res.getDrawable(R.drawable.ic_popup_share)));
-
-        mQuickPopup.setOnPopupItemClickListener(this);
-
         startRefresh();
     }
 
@@ -145,26 +136,8 @@ public abstract class BasePeopleFragment extends BaseFragment implements LoaderM
     @Override
     public boolean onItemLongClick(AdapterView<?> adapterView, View view, int pos, long id) {
         mLastLongClickItem = (PeopleDataHolder) view.getTag();
-        mQuickPopup.show(view);
+
         return true;
-    }
-
-
-    @Override
-    public void onPopupItemClick(QuickPopup source, int pos, int popupId) {
-        if(mLastLongClickItem == null) {
-            Toast.makeText(mActivity, "Error accessing data. Please try again", Toast.LENGTH_LONG).show();
-            Log.w(TAG, "onPopupItemClick() - mLastLongClickItem is null");
-            return;
-        }
-        switch(popupId) {
-            case PopupItemId.SHARE:
-                Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-                sharingIntent.setType("text/plain");
-                sharingIntent.putExtra(Intent.EXTRA_SUBJECT, new StringBuilder().append("@").append(mLastLongClickItem.name).toString());
-                mActivity.startActivity(Intent.createChooser(sharingIntent, "Share tweet"));
-                break;
-        }
     }
 
     @Override

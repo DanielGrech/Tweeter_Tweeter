@@ -16,7 +16,7 @@ import com.DGSD.TweeterTweeter.UI.QuickPopup;
  * Date: 22/11/11 5:49 PM
  * Description: Holds common properties for all fragments
  */
-public abstract class BaseFragment extends DialogFragment implements UpdateableFragment, QuickPopup.OnPopupItemClickListener{
+public abstract class BaseFragment extends DialogFragment implements UpdateableFragment{
     private static final String TAG = BaseFragment.class.getSimpleName();
 
     protected OnRefreshListener mRefreshListener;
@@ -26,8 +26,6 @@ public abstract class BaseFragment extends DialogFragment implements UpdateableF
     protected PortableReceiver mReceiver;
 
     protected FragmentActivity mActivity;
-
-    protected QuickPopup mQuickPopup;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,11 +69,6 @@ public abstract class BaseFragment extends DialogFragment implements UpdateableF
                 }
             }
         });
-
-        /*mQuickPopup = (Utils.isInLandscape(mActivity)) ?
-                new QuickPopup(mActivity, QuickPopup.HORIZONTAL) :
-                new QuickPopup(mActivity, QuickPopup.VERTICAL); */
-        mQuickPopup = new QuickPopup(mActivity, QuickPopup.HORIZONTAL);
     }
 
     @Override
@@ -103,11 +96,6 @@ public abstract class BaseFragment extends DialogFragment implements UpdateableF
 
     public void setOnRefreshListener(OnRefreshListener listener) {
         mRefreshListener = listener;
-    }
-
-    @Override
-    public void onPopupItemClick(QuickPopup source, int pos, int popupId) {
-        Log.w(TAG, "onItemClick() not overridden");
     }
 
     @Override
@@ -141,7 +129,7 @@ public abstract class BaseFragment extends DialogFragment implements UpdateableF
         public void onRefreshError();
     }
 
-    public static class PopupItemId {
+    public static class ActionModeItemId {
         public static final int RETWEET = 0;
         public static final int REPLY = 1;
         public static final int FAVOURITE = 2;

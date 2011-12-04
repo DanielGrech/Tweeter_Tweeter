@@ -4,8 +4,8 @@
 	<color name="actionbar_end">#F0F0F0</color>
     <color name="action_bar_title">#000000</color>
     <color name="tab_text">#FFFFFF</color>
-    <color name="tab_bar_background_start">#4A4A4A</color>
-    <color name="tab_bar_background_end">#707070</color>
+    <color name="tab_bar_background_start">#000000</color>
+    <color name="tab_bar_background_end">#000000</color>
     <color name="horizontal_line">#DEDEDE</color>
     <color name="edit_note_line">#FAFAFA</color>
     <color name="login_header_start">#4A4A4A</color>

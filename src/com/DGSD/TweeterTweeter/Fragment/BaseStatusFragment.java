@@ -1,14 +1,15 @@
 package com.DGSD.TweeterTweeter.Fragment;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v4.view.ActionMode;
+import android.support.v4.view.Menu;
+import android.support.v4.view.MenuItem;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +17,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.*;
 import com.DGSD.TweeterTweeter.Data.Database;
 import com.DGSD.TweeterTweeter.R;
-import com.DGSD.TweeterTweeter.UI.PeopleDataHolder;
-import com.DGSD.TweeterTweeter.UI.PopupItem;
 import com.DGSD.TweeterTweeter.UI.QuickPopup;
 import com.DGSD.TweeterTweeter.UI.StatusDataHolder;
 import com.github.droidfu.widgets.WebImageView;
@@ -73,14 +72,6 @@ public abstract class BaseStatusFragment extends BaseFragment implements LoaderM
         super.onCreate(savedInstanceState);
 
         //Set up popup action items
-        Resources res = getResources();
-        mQuickPopup.addPopupItem(new PopupItem(PopupItemId.RETWEET, "Retweet", res.getDrawable(R.drawable.ic_popup_retweet)));
-        mQuickPopup.addPopupItem(new PopupItem(PopupItemId.REPLY, "Reply", res.getDrawable(R.drawable.ic_popup_reply)));
-        mQuickPopup.addPopupItem(new PopupItem(PopupItemId.FAVOURITE, "Favourite", res.getDrawable(R.drawable.ic_popup_favourite)));
-        mQuickPopup.addPopupItem(new PopupItem(PopupItemId.SHARE, "Share", res.getDrawable(R.drawable.ic_popup_share)));
-
-        mQuickPopup.setOnPopupItemClickListener(this);
-
         startRefresh();
     }
 
@@ -163,7 +154,8 @@ public abstract class BaseStatusFragment extends BaseFragment implements LoaderM
                 holder.user = cursor.getString(CursorCols.orig_tweeter).length() > 0 ?
                         cursor.getString(CursorCols.orig_tweeter) : cursor.getString(CursorCols.screen_name);
                 holder.text = cursor.getString(CursorCols.text);
-                holder.img = cursor.getString(CursorCols.img);
+                holder.img = cursor.getString(CursorCols.orig_tweeter_img).length() > 0 ?
+                        cursor.getString(CursorCols.orig_tweeter_img) : cursor.getString(CursorCols.img);
             }
 
             parent.setTag(holder);
@@ -213,27 +205,8 @@ public abstract class BaseStatusFragment extends BaseFragment implements LoaderM
     @Override
     public boolean onItemLongClick(AdapterView<?> adapterView, View view, int pos, long id) {
         mLastLongClickItem = (StatusDataHolder) view.getTag();
-        mQuickPopup.show(view);
+        mActivity.startActionMode(new StatusItemCallback());
         return true;
-    }
-
-
-    @Override
-    public void onPopupItemClick(QuickPopup source, int pos, int popupId) {
-        if(mLastLongClickItem == null) {
-            Toast.makeText(mActivity, "Error accessing data. Please try again", Toast.LENGTH_LONG).show();
-            Log.w(TAG, "onPopupItemClick() - mLastLongClickItem is null");
-            return;
-        }
-        switch(popupId) {
-            case PopupItemId.SHARE:
-                Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-                sharingIntent.setType("text/plain");
-                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, mLastLongClickItem.text);
-                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Tweet by " + mLastLongClickItem.user);
-                mActivity.startActivity(Intent.createChooser(sharingIntent, "Share tweet"));
-                break;
-        }
     }
 
     @Override
@@ -287,5 +260,86 @@ public abstract class BaseStatusFragment extends BaseFragment implements LoaderM
     @Override
     public void onRefreshError() {
 
+    }
+
+    protected class StatusItemCallback implements ActionMode.Callback {
+
+        private long mTweetId;
+
+        private String mScreenName;
+
+        private String mTweetText;
+
+        private boolean hasError;
+
+        public StatusItemCallback() {
+            hasError = false;
+
+            if(mLastLongClickItem == null) {
+                //We couldn't get a tweet id :(
+                Toast.makeText(getActivity(),
+                        "Error getting data for tweet", Toast.LENGTH_SHORT).show();
+
+                hasError = true;
+            } else {
+                mTweetId = mLastLongClickItem.id;
+
+                mScreenName = mLastLongClickItem.user;
+
+                mTweetText = mLastLongClickItem.text;
+            }
+        }
+
+        @Override
+        public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
+            if(hasError) {
+                return false;
+            } else {
+                actionMode.setTitle(mScreenName + "'s tweet");
+
+                menu.add(Menu.NONE, ActionModeItemId.RETWEET, Menu.NONE, "Retweet" )
+                        .setIcon(R.drawable.ic_menu_retweet);
+
+                menu.add(Menu.NONE, ActionModeItemId.REPLY, Menu.NONE, "Reply" )
+                        .setIcon(R.drawable.ic_menu_reply);
+
+                menu.add(Menu.NONE, ActionModeItemId.FAVOURITE, Menu.NONE, "Favourite" )
+                        .setIcon(R.drawable.ic_menu_favourite);
+
+                menu.add(Menu.NONE, ActionModeItemId.SHARE, Menu.NONE, "Share" )
+                        .setIcon(R.drawable.ic_menu_share);
+
+                return true;
+            }
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
+            return false;
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
+
+            boolean handled = false;
+            switch (menuItem.getItemId()) {
+                case ActionModeItemId.SHARE:
+                    Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+                    sharingIntent.setType("text/plain");
+                    sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, mTweetText);
+                    sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Tweet by " + mScreenName);
+                    mActivity.startActivity(Intent.createChooser(sharingIntent, "Share tweet"));
+                    break;
+            }
+
+            actionMode.finish();
+
+            return handled;
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode actionMode) {
+            //mCurrentActionMode = null;
+        }
     }
 }
