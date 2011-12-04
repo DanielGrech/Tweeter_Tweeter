@@ -8,7 +8,8 @@
 
     <LinearLayout
             android:layout_height="fill_parent"
-            android:layout_width="fill_parent">
+            android:layout_width="fill_parent"
+            android:orientation="vertical">
         <MultiAutoCompleteTextView
                 android:id="@+id/text"
                 android:layout_width="fill_parent"
@@ -17,5 +18,12 @@
                 android:gravity="top|left"
                 android:inputType="textCapSentences|textMultiLine"
                 android:hint="What's happening?"/>
+
+        <com.DGSD.TweeterTweeter.UI.GalleryExt
+            android:id="@+id/gallery"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+
+
     </LinearLayout>
 </ScrollView>
