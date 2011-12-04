@@ -6,14 +6,12 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.LoaderManager;
-import android.support.v4.app.SupportActivity;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.view.Menu;
@@ -34,15 +32,12 @@ import com.DGSD.TweeterTweeter.Data.Database;
 import com.DGSD.TweeterTweeter.Data.FollowingProvider;
 import com.DGSD.TweeterTweeter.R;
 import com.DGSD.TweeterTweeter.TTApplication;
-import com.DGSD.TweeterTweeter.Utils.MediaUploadTask;
-import com.DGSD.TweeterTweeter.Utils.MentionsTokenizer;
-import com.DGSD.TweeterTweeter.Utils.UrlShortenTask;
-import com.DGSD.TweeterTweeter.Utils.Utils;
+import com.DGSD.TweeterTweeter.UI.GalleryAdapter;
+import com.DGSD.TweeterTweeter.UI.GalleryExt;
+import com.DGSD.TweeterTweeter.Utils.*;
 import com.github.droidfu.widgets.WebImageView;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.util.List;
 import java.util.Vector;
 
 /**
@@ -72,6 +67,8 @@ public class NewTweetFragment extends DialogFragment  implements LoaderManager.L
 
     private static final String TWEET_TEXT = "_tweet_text";
 
+    private static final String ADAPTER_URIS = "_adapter_uris";
+
     private static final int GET_GALLERY_IMAGE = 0;
 
     private static final int GET_CAMERA_IMAGE = 1;
@@ -98,6 +95,12 @@ public class NewTweetFragment extends DialogFragment  implements LoaderManager.L
 
     private Uri mLastImageUri;
 
+    private GalleryExt mGallery;
+
+    private GalleryAdapter mGalleryAdapter;
+
+    private UriList mLastUriList;
+
     public static NewTweetFragment newInstance() {
         final NewTweetFragment f = new NewTweetFragment();
 
@@ -119,8 +122,9 @@ public class NewTweetFragment extends DialogFragment  implements LoaderManager.L
             getDialog().setTitle("New Tweet");
         }
 
-        mTweetText =
-                (MultiAutoCompleteTextView) root.findViewById(R.id.text);
+        mTweetText = (MultiAutoCompleteTextView) root.findViewById(R.id.text);
+
+        mGallery = (GalleryExt) root.findViewById(R.id.gallery);
 
         return root;
     }
@@ -165,18 +169,25 @@ public class NewTweetFragment extends DialogFragment  implements LoaderManager.L
         getLoaderManager().initLoader(0, null, this);
 
         getActivity().invalidateOptionsMenu();
+
+        //Restore any images we may have already loaded
+        mGalleryAdapter = new GalleryAdapter(getActivity());
+        mGalleryAdapter.addAll(mLastUriList);
+
+        mGallery.setAdapter(mGalleryAdapter);
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        if(mTweetText != null) {
-            outState.putString(TWEET_TEXT, mTweetText.getText().toString());
-        }
+    public void onPause() {
+        super.onPause();
 
         if(mProgressDialog != null) {
             mProgressBarShowing = mProgressDialog.isShowing();
+        }
+
+        if(mGalleryAdapter != null) {
+            mLastUriList = mGalleryAdapter.getUris();
+            mGalleryAdapter = null;
         }
     }
 
@@ -197,6 +208,13 @@ public class NewTweetFragment extends DialogFragment  implements LoaderManager.L
         if(mMediaUploadTask != null) {
             mMediaUploadTask.setOnMediaUploadListener(null);
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        mGallery = null;
     }
 
     @Override
@@ -309,17 +327,9 @@ public class NewTweetFragment extends DialogFragment  implements LoaderManager.L
         switch(requestCode) {
             case GET_CAMERA_IMAGE:
                 if (resultCode == Activity.RESULT_OK) {
-                    final File file = Utils.getTempFile(getActivity());
-
-                    try{
-                        file.deleteOnExit();
-                    } catch(SecurityException e) {
-                        Log.e(TAG, "onActivityResult()", e);
-                    }
-
                     mMediaUploadTask = new MediaUploadTask(getActivity(),
                             ((TTApplication)getActivity().getApplication()).getSession().getAccessToken(),
-                            Utils.getPath(getActivity(), mLastImageUri));
+                            mLastImageUri);
 
                     mMediaUploadTask.setOnMediaUploadListener(this);
                     mMediaUploadTask.execute();
@@ -330,11 +340,11 @@ public class NewTweetFragment extends DialogFragment  implements LoaderManager.L
                 break;
             case GET_GALLERY_IMAGE:
                 if (resultCode == Activity.RESULT_OK) {
-                    Uri imageUri = intent.getData();
+                    mLastImageUri = intent.getData();
 
                     mMediaUploadTask = new MediaUploadTask(getActivity(),
                             ((TTApplication)getActivity().getApplication()).getSession().getAccessToken(),
-                            Utils.getPath(getActivity(), imageUri));
+                            mLastImageUri);
 
                     mMediaUploadTask.setOnMediaUploadListener(this);
                     mMediaUploadTask.execute();
@@ -479,6 +489,8 @@ public class NewTweetFragment extends DialogFragment  implements LoaderManager.L
         mTweetText.append(text);
 
         mProgressDialog.dismiss();
+
+        mGalleryAdapter.addToAdapter(mLastImageUri);
     }
 
     @Override
@@ -505,6 +517,8 @@ public class NewTweetFragment extends DialogFragment  implements LoaderManager.L
         addToTweet(mTweetText, url);
 
         mProgressDialog.dismiss();
+
+        mGalleryAdapter.addToAdapter(mLastImageUri);
     }
 
     @Override

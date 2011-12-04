@@ -5,6 +5,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.net.Uri;
 import android.nfc.Tag;
@@ -16,6 +18,8 @@ import android.view.Display;
 import android.view.WindowManager;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.AbstractCollection;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -57,7 +61,6 @@ public class Utils {
             return null;
         }
 
-        System.err.println("UNJOINING STRING: " + string);
         return Arrays.asList(string.split(joiner));
     }
 
@@ -123,5 +126,40 @@ public class Utils {
             Log.w(TAG, "Returning null from getPath()");
             return null;
         }
+    }
+
+    public static Bitmap decodeFile(int size, File f) throws IOException {
+        // Decode image size - note setting inJustDecodeBound = true
+        // means we only get the size of the bitmap, we dont allocate
+        // any memory for its pixels (decodeStream returns null)
+        BitmapFactory.Options o = new BitmapFactory.Options();
+        o.inJustDecodeBounds = true;
+        BitmapFactory.decodeStream(new FileInputStream(f),null,o);
+
+        //decode with inSampleSize
+        BitmapFactory.Options o2 = new BitmapFactory.Options();
+        o2.inSampleSize = getImageScale(size, o.outWidth, o.outHeight);
+        return BitmapFactory.decodeStream(new FileInputStream(f), null, o2);
+    }
+
+    /**
+     * Find the correct image scale. This will always return a power of 2
+     * @param size The scaling percentage of the image we want to produce
+     * @param width Width of the original image
+     * @param height Height of the original image
+     * @return A scaling factor for use with BitmapFactory.Options.inSampleSize
+     */
+    public static int getImageScale(int size, int width, int height) {
+        int scale=1;
+        while(true){
+            if( (width / 2) < size || (height / 2) < size)  {
+                break;
+            }
+            width /= 2;
+            height /= 2;
+            scale++;
+        }
+
+        return scale;
     }
 }

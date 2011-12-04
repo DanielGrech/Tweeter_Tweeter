@@ -1,9 +1,11 @@
 package com.DGSD.TweeterTweeter.Utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.hardware.Camera;
+import android.net.Uri;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.util.Log;
@@ -42,21 +44,20 @@ import static com.rosaloves.bitlyj.Bitly.shorten;
 public class MediaUploadTask extends BetterAsyncTask<Void, Void, String> {
     private static final String TAG = MediaUploadTask.class.getSimpleName();
 
-    private static final int REQUIRED_SIZE=70;
+    private static final int REQUIRED_SIZE=50;
 
     private OnMediaUploadListener mListener;
 
     private AccessToken mToken;
 
-    private String mFilePath;
+    private Uri mFileUri;
 
-    public MediaUploadTask(Context c, AccessToken token, String filepath) {
+    public MediaUploadTask(Context c, AccessToken token, Uri fileUri) {
         super(c);
-
 
         mToken = token;
 
-        mFilePath = filepath;
+        mFileUri = fileUri;
     }
 
     public void setOnMediaUploadListener(OnMediaUploadListener listener) {
@@ -83,9 +84,8 @@ public class MediaUploadTask extends BetterAsyncTask<Void, Void, String> {
 
         ImageUpload imageUpload = new ImageUploadFactory(new PropertyConfiguration(props)).getInstance(MediaProvider.TWITPIC);
 
-        Bitmap b = decodeFile( new File(mFilePath) );
         File file = File.createTempFile(Integer.toString(new Random().nextInt()), ".jpg");
-        writeBitmapToFile(b, file);
+        writeBitmapToFile( Utils.decodeFile( REQUIRED_SIZE, new File( Utils.getPath( (Activity)context, mFileUri) ) ) , file);
 
         try {
             return imageUpload.upload(file);
@@ -115,42 +115,12 @@ public class MediaUploadTask extends BetterAsyncTask<Void, Void, String> {
     private void writeBitmapToFile(Bitmap b, File f) throws IOException {
         final FileOutputStream out = new FileOutputStream(f);
 
-        b.compress(Bitmap.CompressFormat.JPEG, 90, out);
+        b.compress(Bitmap.CompressFormat.JPEG, 80, out);
+
+        b.recycle();
+        b = null;
 
         out.close();
-    }
-
-    private Bitmap decodeFile(File f) throws IOException{
-        //decode image size
-        BitmapFactory.Options o = new BitmapFactory.Options();
-        o.inJustDecodeBounds = true;
-        BitmapFactory.decodeStream(new FileInputStream(f),null,o);
-
-        //decode with inSampleSize
-        BitmapFactory.Options o2 = new BitmapFactory.Options();
-        o2.inSampleSize = getImageScale(REQUIRED_SIZE, o.outWidth, o.outHeight);
-        return BitmapFactory.decodeStream(new FileInputStream(f), null, o2);
-    }
-
-    /**
-     * Find the correct image scale. This will always return a power of 2
-     * @param size The scaling percentage of the image we want to produce
-     * @param width Width of the original image
-     * @param height Height of the original image
-     * @return A scaling factor for use with BitmapFactory.Options.inSampleSize
-     */
-    private static int getImageScale(int size, int width, int height) {
-        int scale=1;
-        while(true){
-            if( (width / 2) < REQUIRED_SIZE || (height / 2) < REQUIRED_SIZE)  {
-                break;
-            }
-            width /= 2;
-            height /= 2;
-            scale++;
-        }
-
-        return scale;
     }
 
     public interface OnMediaUploadListener {

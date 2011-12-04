@@ -41,16 +41,17 @@ public class TTApplication extends DroidFuApplication {
 
         //Set strict mode
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-                .detectDiskReads()
+                //.detectDiskReads()
                 .detectDiskWrites()
-                .detectNetwork()   // or .detectAll() for all detectable problems
+                .detectNetwork()
                 .penaltyLog()
                 .build());
 
         StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+                .detectActivityLeaks()
+                .detectLeakedClosableObjects()
                 .detectLeakedSqlLiteObjects()
                 .penaltyLog()
-                .penaltyDeath()
                 .build());
 
         CONSUMER_KEY = getResources().getString(R.string.consumer_key);

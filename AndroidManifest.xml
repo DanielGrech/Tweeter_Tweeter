@@ -50,7 +50,7 @@
         <activity android:name=".Activity.Phone.LoginActivity"/>
         <activity android:name=".Activity.Phone.MainActivity" />
         <activity android:name=".Activity.Phone.DashboardActivity" />
-        <activity android:name=".Activity.Phone.NewTweetActivity" android:label="New Tweet"/>
+        <activity android:name=".Activity.Phone.NewTweetActivity" android:label="New Tweet" android:windowSoftInputMode="stateHidden" uiOptions="splitActionBarWhenNarrow"/>
         <activity android:name=".Activity.Phone.FavouritesActivity" android:label="Favourites"/>
         <activity android:name=".Activity.Phone.PeopleActivity" android:label="People"/>
 
