@@ -95,8 +95,9 @@ public class UrlShortenTask extends BetterAsyncTask<Void, Void, Vector<UrlShorte
     protected void handleError(Context context, Exception e) {
         Log.e(TAG, "Error in UrlShortenTask()", e);
 
-        Toast.makeText(context,
-                "Error shortening url", Toast.LENGTH_SHORT).show();
+        if(mListener != null) {
+            mListener.onShortenUrlError();
+        }
     }
 
     private final Vector<Hyperlink> gatherLinks(Spannable s, Pattern pattern){
@@ -122,6 +123,7 @@ public class UrlShortenTask extends BetterAsyncTask<Void, Void, Vector<UrlShorte
     public interface OnShortenUrlListener {
         public void onStartUrlShorten();
         public void onFinishUrlShorten(Vector<Hyperlink> links);
+        public void onShortenUrlError();
         public String onGetText();
     }
 

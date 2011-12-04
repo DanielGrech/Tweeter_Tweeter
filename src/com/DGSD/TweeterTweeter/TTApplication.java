@@ -11,6 +11,8 @@ import com.github.droidfu.DroidFuApplication;
 import twitter4j.Twitter;
 import twitter4j.conf.Configuration;
 import twitter4j.conf.ConfigurationBuilder;
+import twitter4j.conf.PropertyConfiguration;
+import twitter4j.media.MediaProvider;
 
 /**
  * Author: Daniel Grech

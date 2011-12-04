@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Twitter4j Media">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libs/twitter4j-media.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

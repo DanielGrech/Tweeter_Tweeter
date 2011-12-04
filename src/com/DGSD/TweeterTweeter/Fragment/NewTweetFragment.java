@@ -1,10 +1,12 @@
 package com.DGSD.TweeterTweeter.Fragment;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -27,14 +29,20 @@ import android.view.ViewGroup;
 import android.widget.FilterQueryProvider;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.DGSD.TweeterTweeter.Data.Database;
 import com.DGSD.TweeterTweeter.Data.FollowingProvider;
 import com.DGSD.TweeterTweeter.R;
+import com.DGSD.TweeterTweeter.TTApplication;
+import com.DGSD.TweeterTweeter.Utils.MediaUploadTask;
 import com.DGSD.TweeterTweeter.Utils.MentionsTokenizer;
 import com.DGSD.TweeterTweeter.Utils.UrlShortenTask;
 import com.DGSD.TweeterTweeter.Utils.Utils;
 import com.github.droidfu.widgets.WebImageView;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Vector;
 
 /**
@@ -43,7 +51,7 @@ import java.util.Vector;
  * Description :
  */
 public class NewTweetFragment extends DialogFragment  implements LoaderManager.LoaderCallbacks<Cursor>, SimpleCursorAdapter.ViewBinder,
-        UrlShortenTask.OnShortenUrlListener {
+        UrlShortenTask.OnShortenUrlListener, MediaUploadTask.OnMediaUploadListener {
     private static final String TAG = NewTweetFragment.class.getSimpleName();
 
     protected static final String[] FROM = { Database.Field.SCREEN_NAME, Database.Field.IMG };
@@ -80,9 +88,15 @@ public class NewTweetFragment extends DialogFragment  implements LoaderManager.L
 
     private ProgressDialog mProgressDialog;
 
+    private String mLastDialogMessage;
+
     private boolean mProgressBarShowing = false;
 
     private UrlShortenTask mUrlShortenerTask;
+
+    private MediaUploadTask mMediaUploadTask;
+
+    private Uri mLastImageUri;
 
     public static NewTweetFragment newInstance() {
         final NewTweetFragment f = new NewTweetFragment();
@@ -127,11 +141,15 @@ public class NewTweetFragment extends DialogFragment  implements LoaderManager.L
         }
 
         if(mProgressBarShowing) {
-            mProgressDialog = ProgressDialog.show(getActivity(), "", "Shortening urls", true);
+            mProgressDialog = ProgressDialog.show(getActivity(), "", mLastDialogMessage == null ? "Please Wait.." : mLastDialogMessage, true);
         }
 
         if(mUrlShortenerTask != null) {
             mUrlShortenerTask.setOnShortenUrlListener(this);
+        }
+
+        if(mMediaUploadTask != null) {
+            mMediaUploadTask.setOnMediaUploadListener(this);
         }
     }
 
@@ -174,6 +192,10 @@ public class NewTweetFragment extends DialogFragment  implements LoaderManager.L
 
         if(mUrlShortenerTask != null) {
             mUrlShortenerTask.setOnShortenUrlListener(null);
+        }
+
+        if(mMediaUploadTask != null) {
+            mMediaUploadTask.setOnMediaUploadListener(null);
         }
     }
 
@@ -276,9 +298,52 @@ public class NewTweetFragment extends DialogFragment  implements LoaderManager.L
     private void takePhoto(){
         final Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(Utils.getTempFile(getActivity())) );
+        mLastImageUri = Utils.getTempPhotoUri(getActivity());
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, mLastImageUri);
 
         startActivityForResult(intent, GET_CAMERA_IMAGE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        switch(requestCode) {
+            case GET_CAMERA_IMAGE:
+                if (resultCode == Activity.RESULT_OK) {
+                    final File file = Utils.getTempFile(getActivity());
+
+                    try{
+                        file.deleteOnExit();
+                    } catch(SecurityException e) {
+                        Log.e(TAG, "onActivityResult()", e);
+                    }
+
+                    mMediaUploadTask = new MediaUploadTask(getActivity(),
+                            ((TTApplication)getActivity().getApplication()).getSession().getAccessToken(),
+                            Utils.getPath(getActivity(), mLastImageUri));
+
+                    mMediaUploadTask.setOnMediaUploadListener(this);
+                    mMediaUploadTask.execute();
+                }
+                else {
+                    Log.i(TAG, "Picture not taken!");
+                }
+                break;
+            case GET_GALLERY_IMAGE:
+                if (resultCode == Activity.RESULT_OK) {
+                    Uri imageUri = intent.getData();
+
+                    mMediaUploadTask = new MediaUploadTask(getActivity(),
+                            ((TTApplication)getActivity().getApplication()).getSession().getAccessToken(),
+                            Utils.getPath(getActivity(), imageUri));
+
+                    mMediaUploadTask.setOnMediaUploadListener(this);
+                    mMediaUploadTask.execute();
+                }
+                else {
+                    Log.i(TAG, "Picture not chosen!");
+                }
+                break;
+        }
     }
 
     public static void addToTweet(TextView tv, String text) {
@@ -392,7 +457,8 @@ public class NewTweetFragment extends DialogFragment  implements LoaderManager.L
 
     @Override
     public void onStartUrlShorten() {
-        mProgressDialog = ProgressDialog.show(getActivity(), "", "Shortening urls", true);
+        mLastDialogMessage = "Shortening urls";
+        mProgressDialog = ProgressDialog.show(getActivity(), "", mLastDialogMessage, true);
     }
 
     @Override
@@ -418,6 +484,35 @@ public class NewTweetFragment extends DialogFragment  implements LoaderManager.L
     @Override
     public String onGetText() {
         return mTweetText == null ? null : mTweetText.getText().toString();
+    }
+
+    @Override
+    public void onShortenUrlError() {
+        mProgressDialog.dismiss();
+
+        Toast.makeText(getActivity(),
+                "Error shortening url", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onStartMediaUpload() {
+        mLastDialogMessage = "Uploading images";
+        mProgressDialog = ProgressDialog.show(getActivity(), "", mLastDialogMessage, true);
+    }
+
+    @Override
+    public void onFinishMediaUpload(String url) {
+        addToTweet(mTweetText, url);
+
+        mProgressDialog.dismiss();
+    }
+
+    @Override
+    public void onMediaUploadError() {
+        mProgressDialog.dismiss();
+
+        Toast.makeText(getActivity(),
+                "Error uploading image", Toast.LENGTH_SHORT).show();
     }
 
     private class TweetLengthWatcher implements TextWatcher {
